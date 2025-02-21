@@ -8,9 +8,10 @@ import EsimSteps from "@/components/my-components/presentational/EsimSteps";
 import FAQs from "@/components/my-components/presentational/FAQs";
 import SiteMapSection from "@/components/my-components/presentational/SiteMapSection";
 import WhyEsim from "@/components/my-components/presentational/WhyEsim";
+import { getCountriesThatHavePackages } from "@/services/packages/dataOnlyPackages";
 
 export const revalidate = 3600;
-function Page() {
+async function Page() {
   const accordionData = [
     {
       title: "Is eSIM good for travel?",
@@ -41,7 +42,7 @@ function Page() {
       body: "While eSIM is widely accepted, a few places might still be catching up. Like use of eSIM in India and Russia is not common. It's best to check eSIMCard's country list on our website or app for the latest info.",
     },
   ];
-
+  const countries = await getCountriesThatHavePackages();
   return (
     <>
       <HomeHero />
@@ -51,7 +52,7 @@ function Page() {
       <EsimCompatible />
       <WhyEsim />
       <Reviews />
-      <SiteMapSection />
+      <SiteMapSection countries={countries} />
       <FAQs accordionsData={accordionData} />
       <AppInstall />
     </>
