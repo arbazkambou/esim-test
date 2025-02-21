@@ -1,0 +1,132 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { getSupportedDeviceList } from "@/services/misc/CheckComaptibilityApi";
+import { useQuery } from "@tanstack/react-query";
+import { Smartphone } from "lucide-react";
+import { useState } from "react";
+import FooterLink from "../links/FooterLink";
+import toast from "react-hot-toast";
+import { Spinner } from "../fallbacks/Spinner";
+
+function CheckCompatibilityModal() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const { data: supportedDevices = [], isLoading } = useQuery({
+    queryKey: ["supported-devices"],
+    queryFn: getSupportedDeviceList,
+  });
+  const filteredBrands = Array.from(
+    new Set(supportedDevices.map((device) => device.type)),
+  );
+  const filteredDevices = supportedDevices.filter((device) => {
+    return (
+      device.type
+        .toLowerCase()
+        .trim()
+        .includes(selectedBrand.toLowerCase().trim()) &&
+      device.model
+        .toLowerCase()
+        .trim()
+        .includes(searchQuery.toLowerCase().trim())
+    );
+  });
+  return (
+    <Dialog open={open} onOpenChange={(value) => setOpen(value)}>
+      <DialogTrigger className="flex items-center gap-2 transition-colors hover:cursor-pointer hover:text-primary">
+        <Smartphone size={22} />
+        <p className="font-montserrat text-body-base">
+          Check if your device supports eSIMs
+        </p>
+      </DialogTrigger>
+      <DialogContent className="flex flex-col gap-3 sm:gap-5">
+        <DialogHeader>
+          <DialogTitle className="flex items-center">
+            <p className="text-body-lg font-500">
+              Compatible Devices with eSIM
+            </p>
+          </DialogTitle>
+        </DialogHeader>
+        <p className="flex flex-col gap-1 text-sm opacity-80 sm:flex-row">
+          Here you can write your device name, Or check our {" "}
+          <FooterLink
+            href="#"
+            className="font-500 text-foreground underline underline-offset-4"
+          >
+            Supported Devices Page
+          </FooterLink>
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Input
+            placeholder="Search for your device"
+            className="rounded-[0.6rem] border shadow-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Select
+            value={selectedBrand}
+            onValueChange={(value) => setSelectedBrand(value)}
+          >
+            <SelectTrigger className="h-full rounded-[0.6rem] border shadow-none">
+              <SelectValue placeholder="Choose a brand" />
+            </SelectTrigger>
+            <SelectContent>
+              {filteredBrands.map((brand, index) => (
+                <SelectItem key={index} value={brand}>
+                  {brand}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="barMini max-h-[280px] min-h-[280px] overflow-auto rounded-[0.6rem] border px-2 py-4">
+          <div className="flex flex-col gap-1">
+            {isLoading ? (
+              <Spinner />
+            ) : filteredDevices.length > 0 ? (
+              filteredDevices.map((device, index) => (
+                <p
+                  className="cursor-pointer rounded-[0.6rem] px-3 py-2 text-body-base transition-all hover:bg-muted"
+                  key={index}
+                  onClick={() => {
+                    toast.success(
+                      <div>
+                        <strong>Congratulations 🎉</strong>
+                        <br />
+                        Your device is eSIM compatible
+                      </div>,
+                    );
+                    setOpen(false);
+                  }}
+                >
+                  {device.model}
+                </p>
+              ))
+            ) : (
+              <p className="cursor-pointer rounded-[0.6rem] px-3 py-2 text-body-base transition-all hover:bg-muted">
+                No device found 🙂
+              </p>
+            )}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default CheckCompatibilityModal;
