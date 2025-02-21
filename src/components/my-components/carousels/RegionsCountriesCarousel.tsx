@@ -143,6 +143,7 @@ function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
                           className="rounded-[4px]"
                           fill
                           sizes="auto"
+                          loading="lazy"
                         />
                       </div>
                       {/* Country Name */}
