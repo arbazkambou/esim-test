@@ -10,7 +10,6 @@ import southAmerica from "@/_assets/svgs/southAmerica.svg";
 import { Country, organizeCountries } from "@/helpers/generateSiteMap";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 import RegionsCountriesCarouselMobile from "./RegionsCountriesCarouselMobile";
 
 function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
@@ -53,15 +52,6 @@ function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
       href: "/regional/middle-east/",
     },
   ];
-  const countriesRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
-  const handleLetterClick = (letter: string) => {
-    const targetElement = countriesRef.current[letter];
-
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <>
@@ -101,13 +91,13 @@ function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
           {/* Letter Navigation */}
           <div className="mt-5 flex max-w-full items-center justify-between gap-4 overflow-auto rounded-[0.625rem] bg-primary px-4 py-2 scrollbar-none">
             {sortedCountries.map((item, index) => (
-              <p
-                className="rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary"
+              <Link
                 key={index}
-                onClick={() => handleLetterClick(item.letter)}
+                href={`#${item.letter}`}
+                className="rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary"
               >
                 {item.letter}
-              </p>
+              </Link>
             ))}
           </div>
 
@@ -116,10 +106,7 @@ function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
             {sortedCountries.map((item, index) => (
               <div
                 key={index}
-                ref={(el) => {
-                  // Assign a ref to each letter section
-                  countriesRef.current[item.letter] = el;
-                }}
+                id={item.letter} // Each section has an id matching the letter
                 className="mb-3 flex flex-col gap-3"
               >
                 {/* Country Letter Heading */}

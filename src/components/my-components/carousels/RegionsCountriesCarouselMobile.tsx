@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import { OrganizedCountry } from "@/helpers/generateSiteMap";
 
@@ -9,6 +9,7 @@ export interface Region {
   imgSrc: StaticImageData;
   href: string;
 }
+
 function RegionsCountriesCarouselMobile({
   countries,
   regions,
@@ -18,25 +19,16 @@ function RegionsCountriesCarouselMobile({
 }) {
   const [tabsValue, setTabsValue] = useState("regions");
 
-  const countriesRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
-  const handleLetterClick = (letter: string) => {
-    const targetElement = countriesRef.current[letter];
-
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   useEffect(() => {
     if (tabsValue === "regions") {
-      setTabsValue(() => "countries");
+      setTabsValue("countries");
     }
   }, []);
 
   function handleTabsValueChange(value: string) {
-    setTabsValue(() => value);
+    setTabsValue(value);
   }
+
   return (
     <Tabs
       className="w-full"
@@ -83,13 +75,13 @@ function RegionsCountriesCarouselMobile({
           {/* Letter Navigation */}
           <div className="mt-5 flex max-w-full items-center justify-between gap-4 overflow-auto rounded-[0.625rem] bg-primary px-4 py-2">
             {countries.map((item, index) => (
-              <p
-                className="rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary"
+              <Link
                 key={index}
-                onClick={() => handleLetterClick(item.letter)}
+                href={`#${item.letter}`}
+                className="rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary"
               >
                 {item.letter}
-              </p>
+              </Link>
             ))}
           </div>
 
@@ -98,10 +90,7 @@ function RegionsCountriesCarouselMobile({
             {countries.map((item, index) => (
               <div
                 key={index}
-                ref={(el) => {
-                  // Assign a ref to each letter section
-                  countriesRef.current[item.letter] = el;
-                }}
+                id={item.letter} // Section id for anchor navigation
                 className="mb-3 flex flex-col gap-3"
               >
                 {/* Country Letter Heading */}
