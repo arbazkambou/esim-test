@@ -90,7 +90,6 @@ function HomeHero() {
                     alt={`${item.name} eSIM`}
                     fill
                     sizes="auto"
-                    loading="eager"
                   />
                 </div>
               </Link>
@@ -126,7 +125,6 @@ function HomeHero() {
             alt="eSIM Card We Connect You Globally"
             className="rounded-md object-cover"
             sizes="auto"
-            loading="eager"
           />
           <div className="relative top-[580px] z-20 flex items-center justify-center">
             <SocialsButtons />

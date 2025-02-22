@@ -1,7 +1,8 @@
-import { Country } from "@/helpers/generateSiteMap";
-import RegionsCountriesCarousel from "../carousels/RegionsCountriesCarousel";
+import { Suspense } from "react";
+import { Spinner } from "../fallbacks/Spinner";
+import SiteMapComponent from "../data-fetching/SiteMapComponent";
 
-async function SiteMapSection({ countries }: { countries: Country[] }) {
+async function SiteMapSection() {
   return (
     <section className="mt-16 bg-primary-light py-16">
       <div className="container">
@@ -13,7 +14,7 @@ async function SiteMapSection({ countries }: { countries: Country[] }) {
             Choose your destination
           </p>
         </div>
-        {/* <Suspense
+        <Suspense
           fallback={
             <div className="flex h-[300px] w-full items-center justify-center">
               <Spinner color="primary" />
@@ -21,8 +22,7 @@ async function SiteMapSection({ countries }: { countries: Country[] }) {
           }
         >
           <SiteMapComponent />
-        </Suspense> */}
-        <RegionsCountriesCarousel countries={countries} />
+        </Suspense>
       </div>
     </section>
   );

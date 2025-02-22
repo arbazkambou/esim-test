@@ -8,14 +8,7 @@ function Logo() {
       href={"/"}
       className="relative h-[40px] w-[100px] md:h-[57px] md:w-[137px]"
     >
-      <Image
-        src={logo}
-        fill
-        alt="eSIM Card logo"
-        sizes="auto"
-        quality={50}
-        loading="eager"
-      />
+      <Image src={logo} fill alt="eSIM Card logo" sizes="auto" quality={50} />
     </Link>
   );
 }
