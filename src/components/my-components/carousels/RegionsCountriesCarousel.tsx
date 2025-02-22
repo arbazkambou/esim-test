@@ -71,7 +71,7 @@ function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
                 key={index}
                 href={item.href}
               >
-                <div className="h-[30px] w-[30px]">
+                <div className="relative h-[30px] w-[30px]">
                   <Image
                     src={item.imgSrc}
                     alt={`${item.name} eSIM`}
