@@ -10,7 +10,6 @@ import southAmerica from "@/_assets/svgs/southAmerica.svg";
 import { Country, organizeCountries } from "@/helpers/generateSiteMap";
 import Image from "next/image";
 import Link from "next/link";
-import RegionsCountriesCarouselMobile from "./RegionsCountriesCarouselMobile";
 
 function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
   const sortedCountries = organizeCountries(countries);
@@ -55,12 +54,12 @@ function RegionsCountriesCarousel({ countries }: { countries: Country[] }) {
 
   return (
     <>
-      <div className="mt-[1.31rem] px-3 xl:hidden">
+      {/* <div className="mt-[1.31rem] px-3 xl:hidden">
         <RegionsCountriesCarouselMobile
           countries={sortedCountries}
           regions={regionsData}
         />
-      </div>
+      </div> */}
       <div className="mt-[3.88rem] hidden xl:grid xl:grid-cols-10">
         <div className="col-span-2">
           <h3 className="text-xl font-600">Regions</h3>
