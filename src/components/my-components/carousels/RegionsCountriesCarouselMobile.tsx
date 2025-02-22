@@ -1,8 +1,7 @@
+import { OrganizedCountry } from "@/helpers/generateSiteMap";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
-import { OrganizedCountry } from "@/helpers/generateSiteMap";
 
 export interface Region {
   name: string;
@@ -17,16 +16,8 @@ function RegionsCountriesCarouselMobile({
   countries: OrganizedCountry[];
   regions: Region[];
 }) {
-  const [tabsValue, setTabsValue] = useState("countries");
-
-  useEffect(() => {
-    if (tabsValue === "regions") {
-      setTabsValue("countries");
-    }
-  }, []);
-
   return (
-    <Tabs className="w-full" value={tabsValue} onValueChange={setTabsValue}>
+    <Tabs className="w-full" defaultValue="countries">
       {/* Mobile Tab Navigation */}
       <div className="flex justify-center xl:hidden">
         <TabsList className="flex items-center gap-2">
