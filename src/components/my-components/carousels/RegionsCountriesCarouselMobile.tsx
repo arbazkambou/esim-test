@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import { OrganizedCountry } from "@/helpers/generateSiteMap";
 
@@ -9,6 +9,7 @@ export interface Region {
   imgSrc: StaticImageData;
   href: string;
 }
+
 function RegionsCountriesCarouselMobile({
   countries,
   regions,
@@ -16,33 +17,17 @@ function RegionsCountriesCarouselMobile({
   countries: OrganizedCountry[];
   regions: Region[];
 }) {
-  const [tabsValue, setTabsValue] = useState("regions");
-
-  const countriesRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
-  const handleLetterClick = (letter: string) => {
-    const targetElement = countriesRef.current[letter];
-
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const [tabsValue, setTabsValue] = useState("countries");
 
   useEffect(() => {
     if (tabsValue === "regions") {
-      setTabsValue(() => "countries");
+      setTabsValue("countries");
     }
   }, []);
 
-  function handleTabsValueChange(value: string) {
-    setTabsValue(() => value);
-  }
   return (
-    <Tabs
-      className="w-full"
-      value={tabsValue}
-      onValueChange={handleTabsValueChange}
-    >
+    <Tabs className="w-full" value={tabsValue} onValueChange={setTabsValue}>
+      {/* Mobile Tab Navigation */}
       <div className="flex justify-center xl:hidden">
         <TabsList className="flex items-center gap-2">
           <TabsTrigger value="countries">Countries</TabsTrigger>
@@ -50,22 +35,23 @@ function RegionsCountriesCarouselMobile({
         </TabsList>
       </div>
 
+      {/* Regions Tab Content */}
       <TabsContent value="regions">
-        <div>
+        <>
           <h3 className="text-xl font-600">Regions</h3>
-          <div className="mt-[2.5rem] flex flex-col justify-between gap-10">
-            {regions.map((item, index) => (
+          <div className="mt-[2.5rem] flex flex-col gap-10">
+            {regions.map((item, i) => (
               <Link
-                className="group flex items-center gap-4"
-                key={index}
+                key={i}
                 href={item.href}
+                className="group flex items-center gap-4"
               >
                 <div className="relative h-[30px] w-[30px]">
                   <Image
                     src={item.imgSrc}
                     alt={`${item.name} eSIM`}
-                    sizes="auto"
                     fill
+                    sizes="auto"
                     loading="lazy"
                   />
                 </div>
@@ -75,99 +61,95 @@ function RegionsCountriesCarouselMobile({
               </Link>
             ))}
           </div>
-        </div>
+        </>
       </TabsContent>
+
+      {/* Countries Tab Content */}
       <TabsContent
         value="countries"
         className="mt-[3.88rem] xl:grid xl:grid-cols-10"
       >
-        <div className="hidden xl:col-span-2 xl:block">
-          <h3 className="text-xl font-600">Regions</h3>
-          <div className="mt-[2.5rem] flex flex-col justify-between gap-10">
-            {regions.map((item, index) => (
-              <Link
-                className="group flex items-center gap-4"
-                key={index}
-                href={item.href}
-              >
-                <div className="relative h-[30px] w-[30px]">
-                  <Image
-                    src={item.imgSrc}
-                    alt={`${item.name} eSIM`}
-                    sizes="auto"
-                    fill
-                    loading="lazy"
-                  />
-                </div>
-                <p className="text-body-sm text-foreground-light transition-all group-hover:text-primary">
-                  {item.name}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className="xl:col-span-8">
-          <h3 className="text-xl font-600">Countries</h3>
+        <>
+          {/* Regions on Desktop (Left Column) */}
+          <aside className="hidden xl:col-span-2 xl:block">
+            <h3 className="text-xl font-600">Regions</h3>
+            <div className="mt-[2.5rem] flex flex-col gap-10">
+              {regions.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className="group flex items-center gap-4"
+                >
+                  <div className="relative h-[30px] w-[30px]">
+                    <Image
+                      src={item.imgSrc}
+                      alt={`${item.name} eSIM`}
+                      fill
+                      sizes="auto"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-body-sm text-foreground-light transition-all group-hover:text-primary">
+                    {item.name}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </aside>
 
-          {/* Letter Navigation */}
-          <div className="mt-5 flex max-w-full items-center justify-between gap-4 overflow-auto rounded-[0.625rem] bg-primary px-4 py-2">
-            {countries.map((item, index) => (
-              <p
-                className="rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary"
-                key={index}
-                onClick={() => handleLetterClick(item.letter)}
-              >
-                {item.letter}
-              </p>
-            ))}
-          </div>
+          {/* Countries List (Right Column) */}
+          <main className="xl:col-span-8">
+            <h3 className="text-xl font-600">Countries</h3>
+            {/* Letter Navigation */}
+            <nav className="mt-5 flex max-w-full items-center gap-4 overflow-auto rounded-[0.625rem] bg-primary px-4 py-2">
+              {countries.map((item, i) => (
+                <Link key={i} href={`#${item.letter}`}>
+                  <p className="rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary">
+                    {item.letter}
+                  </p>
+                </Link>
+              ))}
+            </nav>
 
-          {/* Countries List */}
-          <div className="bar mt-10 max-h-[420px] columns-2 gap-8 overflow-x-auto overflow-y-hidden scroll-smooth pb-12 md:columns-3">
-            {countries.map((item, index) => (
-              <div
-                key={index}
-                ref={(el) => {
-                  // Assign a ref to each letter section
-                  countriesRef.current[item.letter] = el;
-                }}
-                className="mb-3 flex flex-col gap-3"
-              >
-                {/* Country Letter Heading */}
-                <p className="text-body-base font-semibold text-primary">
-                  {item.letter}
-                </p>
-
-                {/* Country List */}
-                <div className="flex flex-col gap-3">
-                  {item.countries.map((country, index) => (
-                    <Link
-                      className="group flex gap-4"
-                      key={index}
-                      href={`/esim/${country.slug}/`}
-                    >
-                      {/* Flag */}
-                      <div className="relative h-[24px] w-[34.5px]">
-                        <Image
-                          src={country.image_url}
-                          alt={country.name}
-                          className="rounded-[4px] shadow-lg"
-                          fill
-                          sizes="auto"
-                          loading="lazy"
-                        />
-                      </div>
-                      {/* Country Name */}
-                      <p className="text-body-sm text-foreground-light transition-all group-hover:text-primary">
-                        {country.name}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+            {/* Countries List with Section IDs */}
+            <div className="bar mt-10 max-h-[420px] columns-2 gap-8 overflow-auto scroll-smooth pb-12 md:columns-3 xl:columns-4">
+              {countries.map((item, i) => (
+                <section
+                  key={i}
+                  id={item.letter}
+                  className="mb-3 flex flex-col gap-3"
+                >
+                  <h4 className="text-body-base font-semibold text-primary">
+                    {item.letter}
+                  </h4>
+                  <div className="flex flex-col gap-3">
+                    {item.countries.map((country, j) => (
+                      <Link
+                        key={j}
+                        href={`/esim/${country.slug}/`}
+                        className="group flex gap-4"
+                      >
+                        <div className="relative h-[24px] w-[34.5px]">
+                          <Image
+                            src={country.image_url}
+                            alt={country.name}
+                            className="rounded-[4px] shadow-lg"
+                            fill
+                            sizes="auto"
+                            loading="lazy"
+                          />
+                        </div>
+                        <p className="text-body-sm text-foreground-light transition-all group-hover:text-primary">
+                          {country.name}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </main>
+        </>
       </TabsContent>
     </Tabs>
   );

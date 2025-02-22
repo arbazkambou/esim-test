@@ -18,22 +18,19 @@ export interface OrganizedCountry {
 export function organizeCountries(
   countriesData: Country[],
 ): OrganizedCountry[] {
-  const countryMap: Record<string, Country[]> = {};
-
-  countriesData.forEach((country) => {
-    const firstLetter = country.name.charAt(0).toUpperCase();
-
-    if (!countryMap[firstLetter]) {
-      countryMap[firstLetter] = [];
-    }
-
-    countryMap[firstLetter].push(country);
-  });
+  const countryMap = countriesData.reduce<Record<string, Country[]>>(
+    (acc, country) => {
+      const letter = country.name[0].toUpperCase();
+      (acc[letter] = acc[letter] || []).push(country);
+      return acc;
+    },
+    {} as Record<string, Country[]>,
+  );
 
   return Object.keys(countryMap)
+    .sort((a, b) => a.localeCompare(b))
     .map((letter) => ({
       letter,
       countries: countryMap[letter],
-    }))
-    .sort((a, b) => a.letter.localeCompare(b.letter));
+    }));
 }
