@@ -58,6 +58,7 @@ function RegionsCountriesCarouselMobile({
                     alt={`${item.name} eSIM`}
                     sizes="auto"
                     fill
+                    loading="lazy"
                   />
                 </div>
                 <p className="text-body-sm text-foreground-light transition-all group-hover:text-primary">
@@ -114,6 +115,7 @@ function RegionsCountriesCarouselMobile({
                           className="rounded-[4px] shadow-lg"
                           fill
                           sizes="auto"
+                          loading="lazy"
                         />
                       </div>
                       {/* Country Name */}
