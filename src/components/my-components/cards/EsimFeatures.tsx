@@ -5,7 +5,7 @@ import earth from "@/_assets/svgs/earth.svg";
 import sim from "@/_assets/svgs/sim.svg";
 import trophy from "@/_assets/svgs/trophy.svg";
 import { cardVariantPrimary } from "@/animations/animations";
-import Reveal from "@/animations/Reveal";
+import RevealAuto from "@/animations/RevealAuto";
 import Image from "next/image";
 
 function EsimFeatures() {
@@ -39,7 +39,7 @@ function EsimFeatures() {
           Carrier
         </h2>
         {eSimFeaturesData.map((item, index) => (
-          <Reveal
+          <RevealAuto
             key={index}
             className="flex flex-col items-center gap-5"
             variants={cardVariantPrimary}
@@ -62,7 +62,7 @@ function EsimFeatures() {
                 {item.body}
               </p>
             </div>
-          </Reveal>
+          </RevealAuto>
         ))}
       </div>
     </section>

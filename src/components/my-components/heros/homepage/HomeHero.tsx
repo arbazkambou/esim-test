@@ -15,7 +15,7 @@ import {
   searchInputVariant,
   socialButtonsVariants,
 } from "@/animations/animations";
-import Reveal from "@/animations/Reveal";
+import RevealAuto from "@/animations/RevealAuto";
 import SocialsButtons from "@/components/my-components/shared/SocialsButtons";
 import { Button } from "@/components/ui/button";
 import { ArrowUpLeft } from "lucide-react";
@@ -37,7 +37,7 @@ function HomeHero() {
   return (
     <section className="container mt-16 grid gap-14 bg-background xl:mt-0 xl:grid-cols-5 xxl:mt-10">
       {/* Left Side: Text Content */}
-      <Reveal
+      <RevealAuto
         variants={heroTextVariants}
         className="flex flex-col justify-center gap-12 md:gap-16 xl:col-span-3"
       >
@@ -56,7 +56,7 @@ function HomeHero() {
         </div>
 
         {/* Flags with Hover Effect */}
-        <Reveal className="flex" variants={flagContainerVariants}>
+        <RevealAuto className="flex" variants={flagContainerVariants}>
           {countryFlags.map((item, index) => (
             <Link
               key={index}
@@ -80,10 +80,10 @@ function HomeHero() {
               </div>
             </Link>
           ))}
-        </Reveal>
+        </RevealAuto>
 
         {/* Search Country Region */}
-        <Reveal
+        <RevealAuto
           variants={searchInputVariant}
           className="flex flex-col gap-4 xl:flex-row xl:items-center"
         >
@@ -97,11 +97,11 @@ function HomeHero() {
               Explore all Countries
             </Button>
           </Link>
-        </Reveal>
-      </Reveal>
+        </RevealAuto>
+      </RevealAuto>
 
       {/* Right Side: Hero Image */}
-      <Reveal
+      <RevealAuto
         variants={heroImageVariants}
         className="hidden xl:col-span-2 xl:block"
       >
@@ -116,14 +116,14 @@ function HomeHero() {
             quality={70}
           />
 
-          <Reveal
+          <RevealAuto
             variants={socialButtonsVariants}
             className="relative top-[475px] z-20 flex items-center justify-center xxl:top-[490px]"
           >
             <SocialsButtons />
-          </Reveal>
+          </RevealAuto>
 
-          <Reveal
+          <RevealAuto
             variants={socialButtonsVariants}
             className="relative top-[490px] flex items-center justify-center gap-6 xxl:top-[500px]"
           >
@@ -133,9 +133,9 @@ function HomeHero() {
             <p className="mt-1 text-[8px] font-600 text-background opacity-90 lg:text-xs">
               500,000+ Downloads
             </p>
-          </Reveal>
+          </RevealAuto>
         </div>
-      </Reveal>
+      </RevealAuto>
     </section>
   );
 }
