@@ -6,6 +6,7 @@ import AppInstall from "@/components/my-components/presentational/AppInstall";
 import EsimCompatible from "@/components/my-components/presentational/EsimCompatible";
 import EsimSteps from "@/components/my-components/presentational/EsimSteps";
 import FAQs from "@/components/my-components/presentational/FAQs";
+import SiteMapSection from "@/components/my-components/presentational/SiteMapSection";
 import WhyEsim from "@/components/my-components/presentational/WhyEsim";
 import { Metadata } from "next";
 
@@ -57,7 +58,7 @@ function Page() {
       <EsimCompatible />
       <WhyEsim />
       <Reviews />
-      {/* <SiteMapSection /> */}
+      <SiteMapSection />
       <FAQs accordionsData={accordionData} />
       <AppInstall />
     </>
