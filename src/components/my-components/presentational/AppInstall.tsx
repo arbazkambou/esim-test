@@ -3,9 +3,11 @@ import Image from "next/image";
 import SocialsButtons from "../shared/SocialsButtons";
 import Reveal from "@/animations/Reveal";
 import {
+  heroImageVariants,
   heroTextVariants,
   socialButtonsVariants,
 } from "@/animations/animations";
+import RevealAuto from "@/animations/RevealAuto";
 
 interface PropsType {
   title?: string;
@@ -22,7 +24,12 @@ function AppInstall({ title, description }: PropsType) {
         >
           <div className="flex items-center gap-4">
             <div className="relative h-[21.5px] w-[120px]">
-              <Image src={stars} alt="5 stars rating" fill sizes="auto" />
+              <Image
+                src={stars || "/placeholder.svg"}
+                alt="5 stars rating"
+                fill
+                sizes="auto"
+              />
             </div>
             <p className="text-body-sm font-700 text-background">
               500,000+ Downloads
@@ -55,10 +62,35 @@ function AppInstall({ title, description }: PropsType) {
           </Reveal>
         </Reveal>
         <div>
-          <div className="h-[360px] w-full bg-[url('/images/phones.png')] bg-center bg-no-repeat object-cover xl:hidden"></div>
-          <div
-            className={`absolute -right-0 -top-[8.5rem] hidden ${title ? "h-[500px]" : "h-[530px]"} w-full bg-[url('/images/phoneLg.png')] bg-right bg-no-repeat object-cover xl:block`}
-          ></div>
+          {/* Mobile phone image - visible on smaller screens */}
+          <RevealAuto
+            className="relative h-[360px] w-full xl:hidden"
+            variants={heroImageVariants}
+          >
+            <Image
+              src="/images/phones.png"
+              alt="Mobile app on phones"
+              fill
+              sizes="(max-width: 1279px) 100vw, 0vw"
+              className="object-contain"
+              priority
+            />
+          </RevealAuto>
+
+          {/* Desktop phone image - visible only on xl screens and above */}
+          <Reveal
+            className={`absolute -right-0 -top-[8.5rem] hidden ${title ? "h-[500px]" : "h-[530px]"} w-full xl:block`}
+            variants={heroTextVariants}
+          >
+            <Image
+              src="/images/phoneLg.png"
+              alt="Mobile app on phone"
+              fill
+              sizes="(min-width: 1280px) 50vw, 0vw"
+              className="object-contain object-right"
+              priority
+            />
+          </Reveal>
         </div>
       </div>
     </section>

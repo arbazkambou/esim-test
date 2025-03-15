@@ -8,14 +8,6 @@ import uk from "@/_assets/flags/uk.svg";
 import usa from "@/_assets/flags/usa.svg";
 import hero from "@/_assets/images/hero.png";
 import fiveStars from "@/_assets/svgs/5Star.svg";
-import {
-  flagContainerVariants,
-  heroImageVariants,
-  heroTextVariants,
-  searchInputVariant,
-  socialButtonsVariants,
-} from "@/animations/animations";
-import RevealAuto from "@/animations/RevealAuto";
 import SocialsButtons from "@/components/my-components/shared/SocialsButtons";
 import { Button } from "@/components/ui/button";
 import { ArrowUpLeft } from "lucide-react";
@@ -37,10 +29,7 @@ function HomeHero() {
   return (
     <section className="container mt-16 grid gap-14 bg-background xl:mt-0 xl:grid-cols-5 xxl:mt-10">
       {/* Left Side: Text Content */}
-      <RevealAuto
-        variants={heroTextVariants}
-        className="flex flex-col justify-center gap-12 md:gap-16 xl:col-span-3"
-      >
+      <div className="flex flex-col justify-center gap-12 md:gap-16 xl:col-span-3">
         {/* Headings and text */}
         <div className="flex flex-col gap-6">
           <h1 className="text-center font-montserrat text-4xl md:text-start xl:text-6xl">
@@ -56,7 +45,7 @@ function HomeHero() {
         </div>
 
         {/* Flags with Hover Effect */}
-        <RevealAuto className="flex" variants={flagContainerVariants}>
+        <div className="flex">
           {countryFlags.map((item, index) => (
             <Link
               key={index}
@@ -80,13 +69,10 @@ function HomeHero() {
               </div>
             </Link>
           ))}
-        </RevealAuto>
+        </div>
 
         {/* Search Country Region */}
-        <RevealAuto
-          variants={searchInputVariant}
-          className="flex flex-col gap-4 xl:flex-row xl:items-center"
-        >
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
           <CountryRegionSearch />
           <Link href={"/esim"} className="w-full xl:w-max">
             <Button className="group flex w-full items-center gap-3 text-sm">
@@ -97,14 +83,11 @@ function HomeHero() {
               Explore all Countries
             </Button>
           </Link>
-        </RevealAuto>
-      </RevealAuto>
+        </div>
+      </div>
 
       {/* Right Side: Hero Image */}
-      <RevealAuto
-        variants={heroImageVariants}
-        className="hidden xl:col-span-2 xl:block"
-      >
+      <div className="hidden xl:col-span-2 xl:block">
         <div className="relative h-[606px] w-full">
           <Image
             src={hero}
@@ -116,26 +99,20 @@ function HomeHero() {
             quality={70}
           />
 
-          <RevealAuto
-            variants={socialButtonsVariants}
-            className="relative top-[475px] z-20 flex items-center justify-center xxl:top-[490px]"
-          >
+          <div className="relative top-[475px] z-20 flex items-center justify-center xxl:top-[490px]">
             <SocialsButtons />
-          </RevealAuto>
+          </div>
 
-          <RevealAuto
-            variants={socialButtonsVariants}
-            className="relative top-[490px] flex items-center justify-center gap-6 xxl:top-[500px]"
-          >
+          <div className="relative top-[490px] flex items-center justify-center gap-6 xxl:top-[500px]">
             <div className="relative h-[12px] w-[80px] lg:h-[18px] lg:w-[148px]">
               <Image src={fiveStars} alt="eSIM Card Rating" fill sizes="auto" />
             </div>
             <p className="mt-1 text-[8px] font-600 text-background opacity-90 lg:text-xs">
               500,000+ Downloads
             </p>
-          </RevealAuto>
+          </div>
         </div>
-      </RevealAuto>
+      </div>
     </section>
   );
 }
