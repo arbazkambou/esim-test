@@ -73,7 +73,6 @@ function AppInstall({ title, description }: PropsType) {
               fill
               sizes="(max-width: 1279px) 100vw, 0vw"
               className="object-contain"
-              priority
             />
           </RevealAuto>
 
@@ -88,7 +87,6 @@ function AppInstall({ title, description }: PropsType) {
               fill
               sizes="(min-width: 1280px) 50vw, 0vw"
               className="object-contain object-right"
-              priority
             />
           </Reveal>
         </div>
