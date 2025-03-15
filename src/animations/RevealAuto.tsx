@@ -1,5 +1,5 @@
 "use client";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants } from "motion/react";
 
 interface RevealProps {
   children: React.ReactNode;
