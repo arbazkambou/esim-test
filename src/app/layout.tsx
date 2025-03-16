@@ -2,13 +2,14 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import AuthProvider from "@/providers/AuthProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import ReduxProvider from "@/providers/ReduxProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import type { Metadata } from "next";
-import { Montserrat, Work_Sans, Poppins } from "next/font/google";
+import { Montserrat, Poppins, Work_Sans } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import NextTopLoader from "nextjs-toploader";
-import ReduxProvider from "@/providers/ReduxProvider";
+import AnimatedLayout from "@/animations/AnimatedLayout";
 
 const sans = Work_Sans({
   subsets: ["latin"],
@@ -72,7 +73,7 @@ export default function RootLayout({
             >
               <ReduxProvider>
                 <Navbar />
-                {children}
+                <AnimatedLayout>{children}</AnimatedLayout>
                 <Footer />
               </ReduxProvider>
             </ThemeProvider>

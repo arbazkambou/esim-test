@@ -61,7 +61,7 @@ export const pricingCardVariants: Variants = {
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.09, delay: i * 0.06, ease: "easeIn" },
+    transition: { duration: 0.6, delay: i * 0.06, ease: "easeOut" },
   }),
 };
 

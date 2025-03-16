@@ -18,6 +18,7 @@ export default function RevealAuto({
     <motion.div
       initial="hidden"
       animate="visible"
+      transition={{ delay: 0.05 }}
       variants={variants}
       className={className}
       custom={custom}

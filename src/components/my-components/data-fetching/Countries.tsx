@@ -1,7 +1,7 @@
 "use client";
 
 import { pricingCardVariants } from "@/animations/animations";
-import RevealAuto from "@/animations/RevealAuto";
+import Reveal from "@/animations/Reveal";
 import StartingPriceCard from "@/components/features/packages/StartingPriceCard";
 import { Country } from "@/helpers/generateSiteMap";
 import { usePathname } from "next/navigation";
@@ -17,11 +17,19 @@ function Countries({ countries }: PropsType) {
 
   return (
     <div className="grid gap-x-[1.2rem] gap-y-[1.3rem] sm:grid-cols-2 md:gap-y-[2rem] lg:grid-cols-3 xl:grid-cols-4">
-      {displayedCountries.map((country, index) => (
-        <RevealAuto key={index} variants={pricingCardVariants} custom={index}>
-          <StartingPriceCard country={country} />
-        </RevealAuto>
-      ))}
+      {displayedCountries.map((country, index) => {
+        // Assuming 4 columns, calculate the row index:
+        const rowIndex = Math.floor(index / 4);
+        return (
+          <Reveal
+            key={index}
+            variants={pricingCardVariants}
+            custom={rowIndex % 6}
+          >
+            <StartingPriceCard country={country} />
+          </Reveal>
+        );
+      })}
     </div>
   );
 }

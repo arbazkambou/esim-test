@@ -2,7 +2,7 @@ import { OrganizedCountry } from "@/helpers/generateSiteMap";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 
 export interface Region {
   name: string;
@@ -18,6 +18,26 @@ function RegionsCountriesCarouselMobile({
   regions: Region[];
 }) {
   const [activeLink, setActiveLink] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleLetterClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    letter: string,
+  ) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(letter);
+    if (targetElement && containerRef.current) {
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const targetRect = targetElement.getBoundingClientRect();
+      const horizontalOffset = targetRect.left - containerRect.left;
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollLeft + horizontalOffset,
+        top: containerRef.current.scrollTop,
+        behavior: "smooth",
+      });
+    }
+    setActiveLink(letter);
+  };
 
   return (
     <Tabs className="w-full" defaultValue="countries">
@@ -92,54 +112,55 @@ function RegionsCountriesCarouselMobile({
             <h3 className="text-xl font-600">Countries</h3>
             <nav className="mt-5 flex max-w-full items-center justify-between gap-4 overflow-auto rounded-[0.625rem] bg-primary px-4 py-2 scrollbar-none">
               {countries.map((item, i) => (
-                <Link
-                  key={i}
-                  href={`#${item.letter}`}
-                  onClick={() => setActiveLink(item.letter)}
-                >
+                <div key={i} onClick={(e) => handleLetterClick(e, item.letter)}>
                   <p
-                    className={`rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary ${activeLink === item.letter && "bg-background font-600 text-primary"}`}
+                    className={`rounded-[0.3125rem] px-[0.31rem] py-[0.38] font-montserrat font-400 text-background transition-all hover:cursor-pointer hover:bg-background hover:font-600 hover:text-primary ${
+                      activeLink === item.letter
+                        ? "bg-background font-600 text-primary"
+                        : ""
+                    }`}
                   >
                     {item.letter}
                   </p>
-                </Link>
+                </div>
               ))}
             </nav>
 
-            <div className="bar mt-10 max-h-[420px] columns-2 gap-8 overflow-auto scroll-smooth pb-12 md:columns-3 xl:columns-4">
-              {countries.map((item, i) => (
-                <section
-                  key={i}
-                  id={item.letter}
-                  className="mb-3 flex flex-col gap-3"
-                >
-                  <h4 className="text-body-base font-semibold text-primary">
+            <div
+              ref={containerRef}
+              className="bar mt-10 flex max-h-[400px] max-w-full flex-col flex-wrap gap-x-10 gap-y-4 overflow-auto scroll-smooth pb-12"
+            >
+              {countries.map((item, index) => (
+                <React.Fragment key={index}>
+                  <div
+                    id={item.letter}
+                    className="text-sm font-500 text-primary"
+                    key={index}
+                  >
                     {item.letter}
-                  </h4>
-                  <div className="flex flex-col gap-3">
-                    {item.countries.map((country, j) => (
-                      <Link
-                        key={j}
-                        href={`/esim/${country.slug}/`}
-                        className="group flex gap-4"
-                      >
-                        <div className="relative h-[24px] w-[34.5px]">
-                          <Image
-                            src={country.image_url}
-                            alt={country.name}
-                            className="rounded-[4px] shadow-lg"
-                            fill
-                            sizes="auto"
-                            quality={70}
-                          />
-                        </div>
-                        <p className="text-body-sm text-foreground-light transition-all group-hover:text-primary">
-                          {country.name}
-                        </p>
-                      </Link>
-                    ))}
                   </div>
-                </section>
+                  {item.countries.map((country, j) => (
+                    <Link
+                      key={j}
+                      href={`/esim/${country.slug}/`}
+                      className="group flex min-w-[200px] max-w-[200px] gap-4"
+                    >
+                      <div className="relative h-[24px] w-[34.5px]">
+                        <Image
+                          src={country.image_url}
+                          alt={country.name}
+                          className="rounded-[4px] shadow-lg"
+                          fill
+                          sizes="auto"
+                          quality={70}
+                        />
+                      </div>
+                      <p className="text-body-sm text-foreground-light transition-all group-hover:text-primary">
+                        {country.name}
+                      </p>
+                    </Link>
+                  ))}
+                </React.Fragment>
               ))}
             </div>
           </main>
