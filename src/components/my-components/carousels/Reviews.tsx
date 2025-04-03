@@ -119,6 +119,7 @@ function Reviews({ title, reviews }: PropsType) {
           </SwiperSlide>
         ))}
       </Swiper>
+
       <div className="custom-pagination flex items-center justify-center" />
     </section>
   );

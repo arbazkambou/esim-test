@@ -5,6 +5,7 @@ import Reveal from "@/animations/Reveal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PackagesData } from "@/types/packages/data-only/DataOnlyCountryPackages";
 import { useEffect, useState } from "react";
+import "@/components/my-components/shared/PagesMeta.css";
 
 function PagesMeta({ packages }: { packages: PackagesData }) {
   const { name } = packages.data;

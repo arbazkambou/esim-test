@@ -1,14 +1,14 @@
 "use client";
 
+import { cardVariantPrimary } from "@/animations/animations";
 import Reveal from "@/animations/Reveal";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../../ui/accordion";
-import { cardVariantPrimary } from "@/animations/animations";
-import { useEffect, useState } from "react";
 
 interface PropsType {
   title: string;
@@ -46,19 +46,6 @@ function Accordions({ data }: { data: PropsType[] }) {
           </Reveal>
         ))}
       </Accordion>
-
-      {/* <div className="sr-only">
-        <div>
-          {data.map((item, index) => (
-            <div key={`seo-faq-${index}`} className="mb-4">
-              <h3>{item.title}</h3>
-              <div>
-                <p>{item.body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 }

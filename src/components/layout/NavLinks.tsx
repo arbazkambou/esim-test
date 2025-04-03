@@ -1,5 +1,3 @@
-"use client";
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,25 +12,34 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useAuth } from "@/providers/AuthProvider";
 import { Cpu, LogOut, User, Wallet } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import CartQuantityButton from "../features/cart/CartQuantityButton";
+import CartSheet from "../features/cart/CartSheet";
 import DarkModeToggle from "../my-components/shared/DarkModeToggle";
 import NavSkelton from "../my-components/shared/NavSkelton";
-import MobileNav from "./MobileNav";
-import CartSheet from "../features/cart/CartSheet";
+import MobileNavWrapper from "./MobileNavWrapper";
 
-function NavLinks() {
-  const { isAuthLoading, isAuthenticated, logout } = useAuth();
-  const [showCart, setShowCart] = useState(false);
-  const [isMount, setIsMount] = useState<true | undefined>(true);
+interface PropsType {
+  isAuthLoading: boolean;
+  isAuthenticated: boolean;
+  logout: () => void;
+  showCart: boolean;
+  setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
+  isMount: true | undefined;
+  pathName: string;
+}
 
-  const pathName = usePathname();
-
+function NavLinks({
+  isAuthLoading,
+  isAuthenticated,
+  isMount,
+  logout,
+  pathName,
+  setShowCart,
+  showCart,
+}: PropsType) {
   const navLinks = [
     {
       label: "Buy eSIM",
@@ -164,10 +171,6 @@ function NavLinks() {
     },
   ];
 
-  useEffect(function () {
-    setIsMount(undefined);
-  }, []);
-
   return (
     <>
       <div className="flex items-center gap-2 xl:hidden">
@@ -181,7 +184,7 @@ function NavLinks() {
         )}
 
         <CartQuantityButton setShowCart={setShowCart} />
-        <MobileNav />
+        <MobileNavWrapper />
       </div>
 
       <div className="hidden items-center gap-3 xl:flex 2xl:gap-4">
@@ -230,22 +233,6 @@ function NavLinks() {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-
-        {/* screen reader text just for seo  */}
-        {/* <div className="sr-only">
-          {dropdownLinks.map((group, index) => (
-            <div key={`fallback-${index}`}>
-              <p>{group.label}</p>
-              <ul>
-                {group.items.map((item, idx) => (
-                  <li key={`item-${idx}`}>
-                    <a href={item.href}>{item.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div> */}
 
         <CartQuantityButton setShowCart={setShowCart} />
 

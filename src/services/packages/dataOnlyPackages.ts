@@ -1,3 +1,5 @@
+"use server";
+
 import { Country } from "@/helpers/generateSiteMap";
 import {
   globalErrorHandler,

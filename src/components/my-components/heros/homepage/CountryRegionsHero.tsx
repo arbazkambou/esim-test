@@ -44,15 +44,14 @@ function CountryRegionsHero({ heading, description, imageSrc }: PropsType) {
             {description}
           </p>
         </div>
-        <div className="hidden xl:col-span-1 xl:flex xl:justify-end">
-          <div className="relative h-[250px] w-full md:h-[348px] md:w-[520px] xl:h-[300px] xl:w-[433px]">
+        <div className="hidden xl:col-span-1 xl:flex xl:items-center xl:justify-end">
+          <div className="relative h-[300px] w-[433px]">
             {imageSrc ? (
               <Image
                 src={imageSrc}
                 alt="eSIMs for Easy Travel Connectivity"
                 fill
                 sizes="auto"
-                priority
               />
             ) : (
               <Image
@@ -62,7 +61,6 @@ function CountryRegionsHero({ heading, description, imageSrc }: PropsType) {
                 fill
                 sizes="auto"
                 priority
-                placeholder="blur"
               />
             )}
           </div>

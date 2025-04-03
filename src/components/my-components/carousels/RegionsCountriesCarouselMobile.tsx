@@ -1,3 +1,4 @@
+"use client";
 import { OrganizedCountry } from "@/helpers/generateSiteMap";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";

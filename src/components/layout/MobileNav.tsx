@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Select,
   SelectContent,
@@ -12,7 +10,6 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useAuth } from "@/providers/AuthProvider";
 import { ChevronDown, Cpu, LogOut, Menu, User, Wallet } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,14 +23,24 @@ import {
   CollapsibleTrigger,
 } from "../ui/collapsible";
 import Logo from "./Logo";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
 
-function MobileNav() {
-  const { isAuthLoading, isAuthenticated, logout } = useAuth();
-  const [showNav, setShowNav] = useState(false);
-  const pathName = usePathname();
+interface PropsType {
+  isAuthLoading: boolean;
+  isAuthenticated: boolean;
+  logout: () => void;
+  pathName: string;
+  showNav: boolean;
+  setShowNav: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+function MobileNav({
+  isAuthLoading,
+  isAuthenticated,
+  logout,
+  pathName,
+  showNav,
+  setShowNav,
+}: PropsType) {
   const navLinks = [
     {
       label: "Buy eSIM",

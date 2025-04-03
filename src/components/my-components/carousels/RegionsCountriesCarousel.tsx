@@ -1,5 +1,3 @@
-"use client";
-
 import africa from "@/_assets/svgs/africaMap.svg";
 import asia from "@/_assets/svgs/asiaMap.svg";
 import europe from "@/_assets/svgs/europeMap.svg";

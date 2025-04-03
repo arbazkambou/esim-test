@@ -18,6 +18,32 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps) {
+  const categories = await getBlogsCategories();
+
+  //IF it is a blog slug then page should have a blog spepcifc seo
+  if (!categories.find((category) => category.slug === params.category)) {
+    const blogData = await getBlogDetail(params.category);
+    const {
+      name: meta_title,
+      sub_content: meta_description,
+      keywords: meta_keywords,
+      thumbnail: image_url,
+      created_at,
+      updated_at,
+    } = blogData.blog;
+
+    return generateDynamicSeo({
+      meta_title,
+      meta_description,
+      meta_keywords,
+      url: `https://esimcard.com/${params.category}/`,
+      image: image_url || "https://esimcard.com/images/logo-1x1-new.png",
+      publishedTime: created_at || updated_at || new Date().toISOString(),
+      modifiedTime: created_at || updated_at || new Date().toISOString(),
+    });
+  }
+
+  //it it is not a blog slug then it should render a normal blogs seo
   const blogData = await getBlogs({ category_slug: params.category });
 
   const { meta_title, meta_description } = blogData;
@@ -42,6 +68,7 @@ async function Page({
 }) {
   const categories = await getBlogsCategories();
 
+  //If slug is belong to a blog then it should render a blog detail page else it should render a normal blogs page
   if (!categories.find((category) => category.slug === params.category)) {
     const blogData = await getBlogDetail(params.category);
 

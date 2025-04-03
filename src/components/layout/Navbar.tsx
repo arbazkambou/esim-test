@@ -1,10 +1,10 @@
 import Logo from "./Logo";
-import NavLinks from "./NavLinks";
+import NavLinksWrapper from "./NavLinksWrapper";
 function Navbar() {
   return (
     <header className="container mt-4 flex items-center justify-between bg-background">
       <Logo />
-      <NavLinks />
+      <NavLinksWrapper />
     </header>
   );
 }

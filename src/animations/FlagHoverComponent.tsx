@@ -14,6 +14,7 @@ import { useState } from "react";
 
 const FlagHoverComponent = () => {
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null);
+
   const countryFlags = [
     { imgSrc: usa, name: "USA", href: "/esim/united-states" },
     { imgSrc: uk, name: "UK", href: "/esim/united-kingdom" },
@@ -43,9 +44,9 @@ const FlagHoverComponent = () => {
             className="flex flex-col items-center justify-center gap-3.5"
           >
             {/* Country Name Animation */}
-            <motion.span className="text-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="text-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               {item.name}
-            </motion.span>
+            </span>
 
             {/* Flag Image Animation */}
             <motion.div

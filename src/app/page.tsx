@@ -1,13 +1,3 @@
-import EsimFeatures from "@/components/my-components/cards/EsimFeatures";
-import Reviews from "@/components/my-components/carousels/Reviews";
-import HomeHero from "@/components/my-components/heros/homepage/HomeHero";
-import CountriesSection from "@/components/features/packages/CountriesSection";
-import AppInstall from "@/components/my-components/presentational/AppInstall";
-import EsimCompatible from "@/components/my-components/presentational/EsimCompatible";
-import EsimSteps from "@/components/my-components/presentational/EsimSteps";
-import FAQs from "@/components/my-components/presentational/FAQs";
-import SiteMapSection from "@/components/my-components/presentational/SiteMapSection";
-import WhyEsim from "@/components/my-components/presentational/WhyEsim";
 import appStore from "@/_assets/svgs/appStore.svg";
 import client1 from "@/_assets/svgs/client1.svg";
 import client2 from "@/_assets/svgs/client2.svg";
@@ -16,8 +6,17 @@ import client4 from "@/_assets/svgs/client4.svg";
 import client5 from "@/_assets/svgs/client5.svg";
 import client6 from "@/_assets/svgs/client6.svg";
 import playStore from "@/_assets/svgs/playStore.svg";
-import { Metadata } from "next";
+import CountriesSection from "@/components/features/packages/CountriesSection";
+import EsimFeatures from "@/components/my-components/cards/EsimFeatures";
+import Reviews from "@/components/my-components/carousels/Reviews";
+import HomeHero from "@/components/my-components/heros/homepage/HomeHero";
+import AppInstall from "@/components/my-components/presentational/AppInstall";
+import EsimCompatible from "@/components/my-components/presentational/EsimCompatible";
+import EsimSteps from "@/components/my-components/presentational/EsimSteps";
+import FAQs from "@/components/my-components/presentational/FAQs";
+import WhyEsim from "@/components/my-components/presentational/WhyEsim";
 import { seoData } from "@/lib/seoConfig";
+import { Metadata } from "next";
 
 export const revalidate = 86400;
 
@@ -141,7 +140,7 @@ function Page() {
         title="What Our Customers Have to Say About eSIMCard"
         reviews={reviews}
       />
-      <SiteMapSection />
+      {/* <SiteMapSection /> */}
       <FAQs accordionsData={accordionData} />
       <AppInstall />
     </>

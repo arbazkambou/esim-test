@@ -1,4 +1,5 @@
 // seoData.ts
+
 import type { Metadata } from "next";
 
 interface LocalizedSeo {

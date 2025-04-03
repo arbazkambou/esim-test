@@ -1,4 +1,3 @@
-"use client";
 import hero from "@/_assets/images/hero.png";
 import fiveStars from "@/_assets/svgs/5Star.svg";
 import FlagHoverComponent from "@/animations/FlagHoverComponent";
@@ -60,7 +59,7 @@ function HomeHero() {
             alt="eSIM Card We Connect You Globally"
             className="rounded-[1.8125rem] object-contain"
             sizes="auto"
-            priority
+            // priority
             quality={70}
           />
 

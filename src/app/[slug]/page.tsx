@@ -228,6 +228,7 @@ async function Page({ params }: PropsType) {
         <section className="mt-16">
           <CountryPackagesSection packages={packages} />
         </section>
+
         <EsimSteps
           title={`How does eSIM ${name} Work?`}
           description={`Search for “${name}” and Pick your data plan.`}

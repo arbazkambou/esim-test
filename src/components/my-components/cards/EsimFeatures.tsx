@@ -1,5 +1,3 @@
-"use client";
-
 import clock from "@/_assets/svgs/clock.svg";
 import earth from "@/_assets/svgs/earth.svg";
 import sim from "@/_assets/svgs/sim.svg";
@@ -37,10 +35,7 @@ function EsimFeatures() {
           Carrier
         </h2>
         {eSimFeaturesData.map((item, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center gap-5"
-          >
+          <div key={index} className="flex flex-col items-center gap-5">
             <div>
               <Image
                 src={item.imgSrc}

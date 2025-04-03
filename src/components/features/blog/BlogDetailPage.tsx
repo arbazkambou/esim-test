@@ -10,6 +10,7 @@ import { ArrowUpRight, CalendarClock, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import BlogCard from "./BlogCard";
+import styles from "./BlogDetail.module.css";
 
 interface PageProps {
   blogData: BlogDetailData;
@@ -124,7 +125,7 @@ function BlogDetailPage({ blogData }: PageProps) {
           <div className="flex items-center justify-between">
             {/* author  */}
             <div className="blogs-center flex items-center gap-[10px]">
-              {author_image !== " " ? (
+              {author_image ? (
                 <div className="relative h-[26px] w-[26px] md:h-[43px] md:w-[43px]">
                   <Image
                     src={author_image}
@@ -164,12 +165,12 @@ function BlogDetailPage({ blogData }: PageProps) {
         {/* blog detail */}
         <section
           dangerouslySetInnerHTML={{ __html: content }}
-          className="blog-detail"
+          className={`${styles.blogDetail}`}
         ></section>
 
         <section
           dangerouslySetInnerHTML={{ __html: htmlString }}
-          className="blog-detail hidden"
+          className={`${styles.blogDetail} hidden`}
         ></section>
       </Card>
 

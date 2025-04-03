@@ -64,18 +64,6 @@ function CountriesSection() {
             </Suspense>
           </TabsContent>
 
-          {/* just for seo purpose */}
-          {/* <div className="sr-only">
-            <h2>Data + Voice eSIMs</h2>
-            <CountriesWithDataVoiceStarting />
-
-            <PrimaryButton
-              label="View All Destinations"
-              href="/data-voice-sms/"
-            />
-          </div> */}
-
-          {/* Data voice packages  */}
           <TabContent value="voice">
             <Suspense
               fallback={

@@ -7,7 +7,7 @@ import { getHelpCenterQuestionDetail } from "@/services/support/HelpCenterApis";
 import { BookText, CalendarClock, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
+import styles from "./page.module.css";
 interface PageProps {
   params: { slug: string; category: string };
 }
@@ -139,7 +139,7 @@ async function Page({
         {/* blog detail */}
         <section
           dangerouslySetInnerHTML={{ __html: content }}
-          className="blog-detail"
+          className={`${styles.blogDetail}`}
         ></section>
 
         <Card className="rounded-md border-none px-[1rem] py-[2rem] shadow-myCard">
