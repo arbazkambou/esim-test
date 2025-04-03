@@ -1,4 +1,3 @@
-"use server";
 
 import { generateSlug } from "@/helpers/generateSlug";
 import {

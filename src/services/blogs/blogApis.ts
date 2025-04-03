@@ -1,4 +1,3 @@
-"use server";
 
 import { BlogsSearchParams } from "@/app/blog/page";
 import {
