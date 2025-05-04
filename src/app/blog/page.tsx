@@ -16,7 +16,7 @@ export interface BlogsSearchParams {
   page?: number;
 }
 
-export const revalidate = 0;
+export const revalidate = 86400;
 
 export async function generateMetadata({
   params,
