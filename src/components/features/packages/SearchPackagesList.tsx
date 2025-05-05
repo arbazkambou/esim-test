@@ -2,7 +2,7 @@ import {
   getTopDestinations,
   searchPackagesList,
 } from "@/services/packages/dataOnlyPackages";
-import CountryRegionSearch from "./CountryRegionSearch";
+import SearchPackagesListWrapper from "./SearchPackagesListWrapper";
 
 async function SearchPackagesList() {
   const packagesListResponse = searchPackagesList();
@@ -13,11 +13,9 @@ async function SearchPackagesList() {
     topDestinationsResponse,
   ]);
   return (
-    <CountryRegionSearch
+    <SearchPackagesListWrapper
       packagesList={packagesList}
-      isDataLoading={false}
-      searchInputStyle="!rounded-pill"
-      topDesinations={topDestinations}
+      topDestinations={topDestinations}
     />
   );
 }

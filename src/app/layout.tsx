@@ -24,14 +24,12 @@ const sans = Work_Sans({
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
-  display: "swap",
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
-  display: "swap",
 });
 
 export const viewport: Viewport = {

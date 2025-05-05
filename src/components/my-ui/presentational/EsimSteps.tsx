@@ -84,7 +84,8 @@ function EsimSteps({ title, description }: PropsType) {
             description
           ) : (
             <>
-             To get a virtual phone number from EsimCard, follow these easy steps:
+              To get a virtual phone number from eSIMCard, follow these easy
+              steps:
               <span className="inline sm:block">
                 Communication to the next level. Buy Your eSIM Online from
                 eSIMCard.
