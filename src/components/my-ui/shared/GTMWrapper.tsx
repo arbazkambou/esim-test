@@ -17,7 +17,7 @@ export default function GTMWrapper() {
     // Delay on other routes
     const timer = setTimeout(() => {
       setShouldRender(true);
-    }, 5000);
+    }, 8000);
 
     return () => clearTimeout(timer);
   }, [pathname]);
