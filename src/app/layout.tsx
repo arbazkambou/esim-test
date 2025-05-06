@@ -11,10 +11,10 @@ import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 import type { Viewport } from "next";
 import { Montserrat, Poppins, Work_Sans } from "next/font/google";
+import Script from "next/script";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import TrustpilotWrapper from "@/components/my-ui/shared/TrustpilotWrapper";
 
 const sans = Work_Sans({
   subsets: ["latin"],
@@ -49,7 +49,10 @@ export default function RootLayout({
     >
       <head>
         {/* Trustpilot Script */}
-        <TrustpilotWrapper />
+        <Script
+          strategy="afterInteractive"
+          src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
+        />
       </head>
       <body className="font- bg-background font-sans text-lg font-400">
         {/* <GoogleTagManager gtmId="GTM-N9KR8G4R" /> */}

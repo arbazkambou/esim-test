@@ -245,7 +245,6 @@ function Footer() {
                 <FooterLink
                   key={index}
                   href={item.href}
-                  target="_blank"
                   rel="noopener noreferrer"
                   className="items-start"
                 >

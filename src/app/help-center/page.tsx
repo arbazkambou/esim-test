@@ -4,7 +4,7 @@ import { PageParams } from "../page";
 import { Metadata } from "next";
 import { seoData } from "@/lib/seoConfig";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export async function generateMetadata({
   params,
