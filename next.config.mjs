@@ -61,7 +61,6 @@ const nextConfig = {
         permanent: true,
       },
 
-      //after that needs to verify from sir saad and umar
       {
         source: "/help-center/iphone/how-to-activate-esim-on-iphone/",
         destination: "/blog/iphone/how-to-activate-esim-on-iphone/",
@@ -86,6 +85,26 @@ const nextConfig = {
       {
         source: "/help-center/iphone/how-to-activate-e-sim-to-a-new-iphone/",
         destination: "/iphone/how-to-activate-esim-on-iphone/",
+        permanent: true,
+      },
+      {
+        source: "/help-center/esim/esim-compatible-phones/",
+        destination: "/esim-compatible/",
+        permanent: true,
+      },
+      {
+        source: "/blog/how-to-activate-and-set-up-esim-on-iphone/",
+        destination: "/blog/iphone/esim-card-installation-tips/",
+        permanent: true,
+      },
+      {
+        source: "/blog/travel-/",
+        destination: "/blog/travel-tips/",
+        permanent: true,
+      },
+      {
+        source: "/blog/how-much-does-esim-cost-updated-2023/",
+        destination: "/blog/how-much-does-esim-cost/",
         permanent: true,
       },
       {

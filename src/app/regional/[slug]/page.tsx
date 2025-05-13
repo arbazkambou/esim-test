@@ -15,7 +15,10 @@ import EsimSteps from "@/components/my-ui/presentational/EsimSteps";
 import FAQs from "@/components/my-ui/presentational/FAQs";
 import { cleanString } from "@/helpers/cleanString";
 import { generateDynamicSeo } from "@/helpers/generateDynamicSeo";
-import { getContinentsThatHavePackages, getPackagesOfRegion } from "@/services/packages/dataOnlyPackages";
+import {
+  getContinentsThatHavePackages,
+  getPackagesOfRegion,
+} from "@/services/packages/dataOnlyPackages";
 import { notFound } from "next/navigation";
 
 export const revalidate = Number(process.env.REVALIDATE_TIME);

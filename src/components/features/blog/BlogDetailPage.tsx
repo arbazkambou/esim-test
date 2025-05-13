@@ -247,11 +247,11 @@ function BlogDetailPage({ blogData }: PageProps) {
       {/* Related blogs  */}
       <section className="container mt-16">
         <h2 className="text-center font-poppins text-h2-base font-500 md:text-h2-md xl:text-h2-xl">
-          Recent Blogs
+          Related Blogs
         </h2>
         <div className="mt-16 grid gap-x-[5rem] gap-y-[4rem] xl:grid-cols-2">
-          {related_blogs.map((blog, index) => (
-            <BlogCard blog={blog} key={index} isH3={true} />
+          {related_blogs.slice(0, 2).map((blog, index) => (
+            <BlogCard blog={blog} key={index} isRelatedBlog />
           ))}
         </div>
       </section>

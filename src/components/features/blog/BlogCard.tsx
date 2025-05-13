@@ -7,7 +7,12 @@ import { ArrowUpRight, CalendarClock, PencilLine } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-function BlogCard({ blog, isH3 }: { blog: Blog; isH3?: boolean }) {
+type PropsType = {
+  blog: Blog;
+  isRelatedBlog?: boolean;
+};
+
+function BlogCard({ blog, isRelatedBlog }: PropsType) {
   return (
     <Card className="flex flex-col justify-between gap-[1rem] border border-gray-300 shadow-sm hover:cursor-pointer">
       {/* blog img  */}
@@ -76,10 +81,10 @@ function BlogCard({ blog, isH3 }: { blog: Blog; isH3?: boolean }) {
           href={`/blog${blog.category ? `/${blog.category.slug}` : ""}/${blog.slug}`}
           className="group flex justify-between gap-[0.5rem] font-montserrat transition-all hover:text-primary"
         >
-          {isH3 ? (
-            <h3 className="text-[1.125rem] font-600 md:text-[1.375rem] xl:text-[1.5rem]">
+          {isRelatedBlog ? (
+            <p className="text-[1.125rem] font-600 md:text-[1.375rem] xl:text-[1.5rem]">
               {blog.name}
-            </h3>
+            </p>
           ) : (
             <h2 className="text-[1.125rem] font-600 md:text-[1.375rem] xl:text-[1.5rem]">
               {blog.name}
@@ -90,13 +95,15 @@ function BlogCard({ blog, isH3 }: { blog: Blog; isH3?: boolean }) {
         </Link>
 
         {/* blog description  */}
-        <Link
-          href={`/blog${blog.category ? `/${blog.category.slug}` : ""}/${blog.slug}`}
-        >
-          <p className="cursor-pointer text-base leading-[1.5rem] text-muted-foreground transition-all hover:text-primary">
-            {blog.sub_content}
-          </p>
-        </Link>
+        {!isRelatedBlog && (
+          <Link
+            href={`/blog${blog.category ? `/${blog.category.slug}` : ""}/${blog.slug}`}
+          >
+            <p className="cursor-pointer text-base leading-[1.5rem] text-muted-foreground transition-all hover:text-primary">
+              {blog.sub_content}
+            </p>
+          </Link>
+        )}
 
         {/* blog author  */}
         <div className="blogs-center flex items-center gap-[10px]">
