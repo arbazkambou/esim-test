@@ -23,6 +23,7 @@ const FlagHoverComponent = ({ countryFlags }: PropsType) => {
           <Link
             href={item.href}
             className="flex flex-col items-center justify-center gap-3.5"
+            prefetch={false}
           >
             {/* Country Name fade-in on hover */}
             <span className="text-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100">

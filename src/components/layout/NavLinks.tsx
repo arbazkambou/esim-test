@@ -178,6 +178,7 @@ function NavLinks({
       <div className="hidden items-center gap-3 xl:flex 2xl:gap-4">
         {navLinks.map((item, index) => (
           <Link
+            prefetch={false}
             key={index}
             href={item.href}
             className={`rounded-pill px-3 py-2 font-sans text-sm font-500 transition-all hover:bg-primary hover:text-background ${pathName === item.href && "bg-primary text-background"}`}
@@ -207,6 +208,7 @@ function NavLinks({
                         href={item.href}
                         passHref
                         legacyBehavior
+                        prefetch={false}
                       >
                         <NavigationMenuLink
                           className={`rounded-sm px-2 py-1.5 text-sm transition-all hover:bg-muted ${item.href === pathName && "font-500 !text-primary"}`}
@@ -229,6 +231,7 @@ function NavLinks({
         ) : isAuthenticated ? (
           authLinks.map((item, index) => (
             <Link
+              prefetch={false}
               key={index}
               href={item.href}
               className={`flex items-center gap-2 rounded-pill bg-muted px-3 py-2 font-sans text-sm font-500 transition-all duration-200 ${item.label === "Logout" ? "hover:bg-destructive" : "hover:bg-primary"} hover:text-background ${item.href === pathName && (item.label === "logout" ? "bg-destructive text-background" : "bg-primary text-background")}`}
@@ -241,6 +244,7 @@ function NavLinks({
         ) : (
           nonAuthLinks.map((item, index) => (
             <Link
+              prefetch={false}
               key={index}
               href={item.href}
               className="flex items-center gap-2 rounded-pill bg-muted px-3 py-2 font-sans text-sm font-500 transition-all duration-200 hover:bg-primary hover:text-background"

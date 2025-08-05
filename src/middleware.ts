@@ -28,4 +28,6 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-export const config = { matcher: "/((?!(?:.*\\.|api(?:/|$))).*)" };
+export const config = {
+  matcher: ["/sim-buy-thank-you", "/"],
+};

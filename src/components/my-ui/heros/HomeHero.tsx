@@ -54,7 +54,7 @@ function HomeHero() {
           <div className="relative top-2 flex flex-col gap-4 xl:flex-row xl:items-center">
             <SearchPackagesList />
 
-            <Link href={"/esim"} className="w-full xl:w-max">
+            <Link href={"/esim"} className="w-full xl:w-max" prefetch={false}>
               <Button className="group flex w-full items-center gap-3 text-sm">
                 <ArrowUpLeft
                   className="transition group-hover:rotate-90 group-hover:text-foreground"
@@ -76,8 +76,8 @@ function HomeHero() {
             alt="eSIM Card We Connect You Globally"
             className="rounded-[1.8125rem] object-contain"
             sizes="auto"
-            priority
-            quality={60}
+            // priority
+            quality={50}
           />
 
           <div className="relative top-[490px] z-20 flex items-center justify-center">

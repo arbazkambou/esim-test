@@ -11,6 +11,7 @@ interface PropsType {
 function StartingPriceCard({ country }: PropsType) {
   return (
     <Link
+      prefetch={false}
       className="group flex justify-between rounded-lg border border-transparent bg-muted px-[1.06rem] py-[0.94rem] transition-all hover:scale-105 hover:border-primary hover:bg-background hover:shadow-2xl"
       href={
         country.slug
