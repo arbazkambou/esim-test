@@ -1,0 +1,11 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.activatewireless.esim_card",
+      "sha256_cert_fingerprints":
+      ["6E:6A:50:8F:FE:6A:85:AB:89:4B:26:BB:15:B7:41:C6:1F:13:22:B2:26:88:29:EC:49:60:1B:09:E9:89:50:A6"]
+    }
+  }]
+
+  

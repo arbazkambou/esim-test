@@ -1,0 +1,47 @@
+.blogDetail {
+  @apply text-base;
+}
+
+.blogDetail h1 {
+  @apply mb-[1.5rem] text-[1.875rem] font-500 leading-[1] !text-foreground xl:text-[2.5rem];
+}
+
+.blogDetail h2 {
+  @apply my-[1.3rem] text-[1.625rem] font-500 leading-[1.5rem] !text-foreground xl:text-[2rem];
+}
+.blogDetail h3 {
+  @apply my-[1rem] text-[1.5rem] font-500 leading-[1.5rem] !text-foreground xl:text-[1.75rem];
+}
+
+.blogDetail h4 {
+  @apply my-[0.8rem] text-[1.3rem] font-500 leading-[1.4rem] !text-foreground xl:text-[1.5rem];
+}
+
+.blogDetail img {
+  @apply my-[1.5rem] rounded-[1.5rem];
+}
+.blogDetail span {
+  @apply leading-[2rem] !text-foreground;
+}
+.blogDetail ul {
+  @apply mb-[0.8rem] list-disc ps-[1.25rem] marker:text-[13px] marker:text-foreground;
+}
+
+.blogDetail ol {
+  @apply mb-[1rem] list-decimal ps-[1.25rem] marker:text-[13px] marker:text-foreground;
+}
+
+.blogDetail a {
+  @apply !text-primary underline underline-offset-4;
+}
+
+.blogDetail p {
+  @apply mb-[0.5rem];
+}
+.blogDetail iframe {
+  @apply aspect-video w-full;
+}
+
+.blogDetail strong {
+  @apply font-600 !text-foreground;
+}
