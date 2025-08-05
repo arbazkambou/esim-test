@@ -76,8 +76,8 @@ function HomeHero() {
             alt="eSIM Card We Connect You Globally"
             className="rounded-[1.8125rem] object-contain"
             sizes="auto"
-            // priority
-            quality={70}
+            priority
+            quality={60}
           />
 
           <div className="relative top-[490px] z-20 flex items-center justify-center">

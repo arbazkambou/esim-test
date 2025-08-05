@@ -15,16 +15,19 @@ import EsimSteps from "@/components/my-ui/presentational/EsimSteps";
 import FAQs from "@/components/my-ui/presentational/FAQs";
 import { cleanString } from "@/helpers/cleanString";
 import { generateDynamicSeo } from "@/helpers/generateDynamicSeo";
-import { getPackagesOfRegion } from "@/services/packages/dataOnlyPackages";
+import {
+  getContinentsThatHavePackages,
+  getPackagesOfRegion,
+} from "@/services/packages/dataOnlyPackages";
 import { notFound } from "next/navigation";
 
 export const revalidate = Number(process.env.REVALIDATE_TIME);
 
-// export async function generateStaticParams() {
-//   const response = await getContinentsThatHavePackages();
+export async function generateStaticParams() {
+  const response = await getContinentsThatHavePackages();
 
-//   return response.map((item) => ({ slug: item.slug }));
-// }
+  return response.map((item) => ({ slug: item.slug }));
+}
 
 interface PropsType {
   params: { slug: string };

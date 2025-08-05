@@ -15,8 +15,10 @@ import EsimSteps from "@/components/my-ui/presentational/EsimSteps";
 import FAQs from "@/components/my-ui/presentational/FAQs";
 import { cleanString } from "@/helpers/cleanString";
 import { generateDynamicSeo } from "@/helpers/generateDynamicSeo";
+import { generateSlug } from "@/helpers/generateSlug";
 import {
   getContinentsThatHaveDataVoicePackages,
+  getCountriesThatHaveDataVoicePackages,
   getDataVoicePackagesOfCountry,
   getDataVoicePackagesOfRegion,
 } from "@/services/packages/dataVoicePackages";
@@ -25,26 +27,26 @@ import { notFound } from "next/navigation";
 
 export const revalidate = Number(process.env.REVALIDATE_TIME);
 
-// export async function generateStaticParams() {
-//   const response1 = getCountriesThatHaveDataVoicePackages();
-//   const response2 = getContinentsThatHaveDataVoicePackages();
+export async function generateStaticParams() {
+  const response1 = getCountriesThatHaveDataVoicePackages();
+  const response2 = getContinentsThatHaveDataVoicePackages();
 
-//   const [countries, continents] = await Promise.all([response1, response2]);
+  const [countries, continents] = await Promise.all([response1, response2]);
 
-//   const countriesWithSlug = countries.map((item) => ({
-//     ...item,
-//     slug: generateSlug(item.name),
-//   }));
+  const countriesWithSlug = countries.map((item) => ({
+    ...item,
+    slug: generateSlug(item.name),
+  }));
 
-//   const continentsWithSlug = continents.map((item) => ({
-//     ...item,
-//     slug: `${item.slug}-esim`,
-//   }));
+  const continentsWithSlug = continents.map((item) => ({
+    ...item,
+    slug: `${item.slug}-esim`,
+  }));
 
-//   const allCountries = [...countriesWithSlug, ...continentsWithSlug];
+  const allCountries = [...countriesWithSlug, ...continentsWithSlug];
 
-//   return allCountries.map((item) => ({ slug: item.slug }));
-// }
+  return allCountries.map((item) => ({ slug: item.slug }));
+}
 
 interface PropsType {
   params: { slug: string };
