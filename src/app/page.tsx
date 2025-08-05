@@ -35,7 +35,7 @@ export async function generateMetadata({
 }
 
 function Page() {
-  const accordionData = [
+  const accordionsData = [
     {
       title: "Is eSIM good for travel?",
       body: "Absolutely! eSIM is fantastic for travel. It lets you hop from one country to another without the hassle of swapping SIM cards. Plus, you get to enjoy local data rates!",
@@ -327,7 +327,7 @@ function Page() {
         reviews={reviews}
       />
       {/* <SiteMapSection /> */}
-      <FAQs accordionsData={accordionData} />
+      <FAQs accordionsData={accordionsData} />
       <AppInstall />
     </>
   );
