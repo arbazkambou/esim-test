@@ -40,7 +40,7 @@ export async function getCountriesThatHaveDataVoicePackages() {
 
 export async function getContinentsThatHaveDataVoicePackages() {
   try {
-    const response = await fetch(`${baseUrl}/partner/continent"`, {
+    const response = await fetch(`${baseUrl}/partner/continent`, {
       headers: {
         "Content-Type": "application/json",
       },

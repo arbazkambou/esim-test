@@ -12,7 +12,6 @@ async function SearchPackagesList() {
     packagesListResponse,
     topDestinationsResponse,
   ]);
-
   return (
     <SearchPackagesListWrapper
       packagesList={packagesList}
