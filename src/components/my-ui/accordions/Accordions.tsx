@@ -1,7 +1,5 @@
 "use client";
 
-import { cardVariantPrimary } from "@/lib/animations";
-import Reveal from "@/components/animations/Reveal";
 import { useEffect, useState } from "react";
 import {
   Accordion,
@@ -27,7 +25,7 @@ function Accordions({ data }: { data: PropsType[] }) {
         className="grid gap-x-10 gap-y-6 lg:grid-cols-2"
       >
         {data.map((item, index) => (
-          <Reveal key={index} variants={cardVariantPrimary}>
+          <div key={index}>
             <AccordionItem
               value={`${index}`}
               key={index}
@@ -43,7 +41,7 @@ function Accordions({ data }: { data: PropsType[] }) {
                 {item.body}
               </AccordionContent>
             </AccordionItem>
-          </Reveal>
+          </div>
         ))}
       </Accordion>
     </div>

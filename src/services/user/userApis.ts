@@ -1,15 +1,28 @@
-import { globalErrorHandler } from "@/helpers/globalResponseHandler";
+import {
+  globalErrorHandler,
+  globalResponseHandler,
+} from "@/helpers/globalResponseHandler";
+import { baseUrl } from "@/lib/fetch/apiSetup";
 import { GetUserObject } from "@/types/user/UserTypes";
-import api from "../../lib/axios/apiSetup";
+import Cookies from "js-cookie";
 
 export async function getUser() {
   try {
-    const response = await api.get<GetUserObject>("/user");
+    const token = Cookies.get("token");
+    const res = await fetch(`${baseUrl}/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (!response.data) {
-      throw new Error("Failed to get user");
+    const data: GetUserObject = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
-    return response.data;
+
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

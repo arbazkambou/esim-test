@@ -41,7 +41,11 @@ function Page() {
           content: [
             {
               type: "text",
-              text: "Our services include providing and managing eSIMs (electronic SIM cards) for mobile devices, enabling users to access cellular networks without needing a physical SIM card. Unlimited bundles offer 1GB of unthrottled 5G data every 24 hours from the first use. After the 1GB is used, unlimited data is available at reduced speeds for the rest of the 24 hours.",
+              text: "Our Unlimited plans include a daily high-speed data allowance (1GB, 2–3GB, or 5GB depending on the plan) with unlimited data at reduced speeds thereafter. The high-speed data resets every 24 hours from the first use.",
+            },
+            {
+              type: "bold",
+              text: "Please note: Data caps and speed policies may vary by country. In some locations, there are no speed restrictions. Before purchasing, we strongly recommend reviewing the full plan details to understand what’s included.",
             },
           ],
         },
@@ -212,7 +216,7 @@ function Page() {
 
             {
               type: "bold",
-              text: "Monthly Subscriptions: UltimateMobile sims have monthly subscriptions and they need to be renewed in order to keep using the number and not lose it.",
+              text: "Monthly Subscriptions: eSIMs come with renewable subscriptions that must be renewed before the expiry date to continue using the number and avoid service interruption.",
             },
 
             {
@@ -258,7 +262,7 @@ function Page() {
 
             {
               type: "bold",
-              text: "Monthly Subscriptions: UltimateMobile sims have monthly subscriptions and they need to be renewed in order to keep using the number and not lose it.",
+              text: "Monthly Subscriptions: eSIMs come with renewable subscriptions that must be renewed before the expiry date to continue using the number and avoid service interruption.",
             },
 
             {

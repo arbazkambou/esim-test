@@ -1,6 +1,5 @@
 "use client";
 
-import api from "@/lib/axios/apiSetup";
 import {
   LoginUserResponseType,
   LoginUserType,
@@ -9,11 +8,12 @@ import {
   RegisterUserResponseType,
   RegisterUserType,
 } from "@/types/auth/RegisterUserTypes";
+import { GetUserObject } from "@/types/user/UserTypes";
 import { useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePromoCode } from "./PromoCodeProvider";
+import { baseUrl } from "@/lib/fetch/apiSetup";
 
 interface AuthContextTypes {
   user: LoginUserType | null;
@@ -60,25 +60,28 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
   //fetch user api which will run on first page load to check if user is authenticated or not
   async function fetchUser() {
-    const token = Cookies.get("token");
     try {
-      const response = await api.get<LoginUserType>("/user", {
-        headers: { Authorization: `Bearer ${token} ` },
+      const token = Cookies.get("token");
+      const response = await fetch(`${baseUrl}/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
-      if (!response.data.id) {
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      const data: GetUserObject = await response.json();
+
+      if (!data.id) {
         return logout();
       }
-      setUser(response.data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (!error.response) {
-          return;
-        }
 
-        logout();
-      } else {
-        logout();
-      }
+      setUser(data);
+    } catch {
+      logout();
     }
   }
 

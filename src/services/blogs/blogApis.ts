@@ -1,78 +1,52 @@
-import { BlogsSearchParams } from "@/app/blog/page";
-import {
-  globalErrorHandler,
-  globalResponseHanlder,
-} from "@/helpers/globalResponseHandler";
 import { BlogCategories } from "@/types/blogs/BlogCategories";
 import { BlogDetailResponse } from "@/types/blogs/BlogDetail";
 import { Blogs } from "@/types/blogs/Blogs";
-import api from "../../lib/axios/apiSetup";
+
+import { BlogsSearchParams } from "@/app/blog/page";
+import { baseUrl } from "@/lib/fetch/apiSetup";
+import {
+  globalErrorHandler,
+  globalResponseHandler,
+} from "@/helpers/globalResponseHandler";
 
 export async function getBlogs(searchParams: BlogsSearchParams) {
   try {
-    const response = await api.get<Blogs>("/blogs", {
-      params: { ...searchParams },
+    const response = await fetch(`${baseUrl}/blogs?${searchParams}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 3600 },
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: Blogs = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(response, response.status));
     }
-    return response.data.data;
+    return data.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
 }
-
-// export async function getBlogsCategories() {
-//   try {
-//     const response = await api.get<BlogCategories>("/blog-categories");
-
-//     if (!response.data.status) {
-//       throw new Error(globalResponseHanlder(response));
-//     }
-//     return response.data.data;
-//   } catch (error) {
-//     throw new Error(globalErrorHandler(error));
-//   }
-// }
 
 export async function getBlogsCategories() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blog-categories`,
-      {
-        next: { revalidate: 86400 },
+    const response = await fetch(`${baseUrl}/blog-categories`, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      next: { revalidate: 86400 },
+    });
 
-    if (!res.ok) {
-      throw new Error(await res.text());
+    const data: BlogCategories = await response.json();
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(response, response.status));
     }
-
-    const response: BlogCategories = await res.json();
-
-    if (!response.status) {
-      throw new Error("Not found");
-    }
-
-    return response.data;
+    return data.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
 }
-
-// export async function getBlogDetail(slug: string) {
-//   try {
-//     const response = await api.get<BlogDetailResponse>(`/blog/detail/${slug}`);
-
-//     if (!response.data.status) {
-//       throw new Error(globalResponseHanlder(response));
-//     }
-//     return response.data.data;
-//   } catch (error) {
-//     throw new Error(globalErrorHandler(error));
-//   }
-// }
 
 export async function getBlogDetail({
   slug,
@@ -82,32 +56,29 @@ export async function getBlogDetail({
   categorySlug?: string;
 }) {
   const params = new URLSearchParams();
-
   if (categorySlug) {
     params.set("category_slug", categorySlug);
   }
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blog/detail/${slug}?${params.toString()}`,
+    const response = await fetch(
+      `${baseUrl}/blog/detail/${slug}?${params.toString()}`,
       {
+        headers: {
+          "Content-Type": "application/json",
+        },
         next: {
           revalidate: 86400,
         },
       },
     );
 
-    if (!res.ok) {
-      throw new Error(await res.text());
+    const data: BlogDetailResponse = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(response, response.status));
     }
-
-    const response: BlogDetailResponse = await res.json();
-
-    if (!response.status) {
-      throw new Error(response.message);
-    }
-
-    return response.data;
+    return data.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

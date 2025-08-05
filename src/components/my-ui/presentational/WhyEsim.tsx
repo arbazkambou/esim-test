@@ -1,5 +1,3 @@
-import Reveal from "@/components/animations/Reveal";
-import { heroTextVariants } from "@/lib/animations";
 import {
   Factory,
   Handshake,
@@ -47,7 +45,7 @@ function WhyEsim() {
   return (
     <section className="container mt-16 bg-background">
       <div className="flex flex-col gap-[1.31rem] xl:flex-row xl:items-start xl:justify-between">
-        <Reveal variants={heroTextVariants}>
+        <div>
           <h2 className="text-center font-montserrat text-h2-base font-600 text-foreground md:text-h2-md xl:text-start xl:text-h2-xl">
             Why International Travelers Trust eSIMCard's eSIM?
           </h2>
@@ -56,13 +54,10 @@ function WhyEsim() {
             Just <br />
             One Tap to Travel Through Nations
           </p>
-        </Reveal>
-        <Reveal
-          className="flex items-center justify-center"
-          variants={heroTextVariants}
-        >
+        </div>
+        <div className="flex items-center justify-center">
           <PrimaryButton href="/esim/" label="Show Me eSlM Plans" />
-        </Reveal>
+        </div>
       </div>
       <div className="mt-[3.69rem] grid gap-x-[4rem] gap-y-[4rem] md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         {cardsData.map((item, index) => (

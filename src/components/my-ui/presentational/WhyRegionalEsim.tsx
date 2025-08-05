@@ -1,7 +1,5 @@
 "use client";
 
-import { cardVariantPrimary, heroTextVariants } from "@/lib/animations";
-import Reveal from "@/components/animations/Reveal";
 import { Gift, Scale, Smartphone } from "lucide-react";
 
 function WhyRegionalEsim() {
@@ -25,7 +23,7 @@ function WhyRegionalEsim() {
   return (
     <section className="mt-16 rounded-none bg-primary-gradient px-4 py-8 text-background sm:p-12">
       <div className="container flex flex-col gap-6">
-        <Reveal className="flex flex-col gap-6" variants={heroTextVariants}>
+        <div className="flex flex-col gap-6">
           <h2 className="font-montserrat text-h2-base font-600 md:text-h2-md xl:text-h2-xl">
             Why Choose eSIMCard for Regional eSIM
           </h2>
@@ -38,20 +36,15 @@ function WhyRegionalEsim() {
           <h3 className="font-700 opacity-80">
             Here is why eSIMCard stands out:
           </h3>
-        </Reveal>
+        </div>
 
         <div className="mt-[3.25rem] grid place-content-center gap-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-24">
           {whyChooseCardsData.map((item, index) => (
-            <Reveal
-              className="flex flex-col gap-6"
-              key={index}
-              custom={index}
-              variants={cardVariantPrimary}
-            >
+            <div className="flex flex-col gap-6" key={index}>
               <span>{item.icon}</span>
               <p className="text-lg font-600">{item.title}</p>
               <p className="text-lg opacity-80">{item.body}</p>
-            </Reveal>
+            </div>
           ))}
         </div>
       </div>

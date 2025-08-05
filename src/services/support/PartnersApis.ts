@@ -1,25 +1,29 @@
 import {
   globalErrorHandler,
-  globalResponseHanlder,
+  globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   distributorPartnerInputs,
   DistributorPartnerResponse,
 } from "@/types/support/PartnersTypes";
-import api from "../../lib/axios/apiSetup";
 
 export async function postDistributorData(formData: distributorPartnerInputs) {
   try {
-    const response = await api.post<DistributorPartnerResponse>(
-      "/partner-distribution",
-      {
-        ...formData,
+    const res = await fetch(`${baseUrl}/partner-distribution`, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+      body: JSON.stringify({ ...formData }),
+    });
+
+    const data: DistributorPartnerResponse = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
-    return response.data.message;
+
+    return data.message;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

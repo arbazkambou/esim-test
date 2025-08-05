@@ -1,9 +1,7 @@
 "use client";
 
-import { searchDropdownVariants } from "@/lib/animations";
 import { cleanString } from "@/helpers/cleanString";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../../ui/input";
@@ -57,28 +55,11 @@ function CountrySearchFallback({ searchInputStyle, isDataLoading }: PropsType) {
       <Search className="absolute right-3 top-1/2 -translate-y-1/2 transform text-primary" />
 
       {/* Search Dropdown with AnimatePresence */}
-      <AnimatePresence>
-        {showSuggestions && searchQuery && (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={searchDropdownVariants}
-            exit={"exit"}
-            className="barMini absolute top-[3.4rem] flex max-h-[320px] w-full flex-col overflow-auto rounded-md bg-background py-4 ps-3 shadow-2xl"
-          >
-            {isDataLoading && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-sm"
-              >
-                Searching...
-              </motion.p>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showSuggestions && searchQuery && (
+        <div className="barMini absolute top-[3.4rem] flex max-h-[320px] w-full flex-col overflow-auto rounded-md bg-background py-4 ps-3 shadow-2xl">
+          {isDataLoading && <p className="text-sm">Searching...</p>}
+        </div>
+      )}
     </div>
   );
 }

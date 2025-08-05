@@ -1,28 +1,45 @@
 import {
   globalErrorHandler,
-  globalResponseHanlder,
+  globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   HelpCenterCategories,
   HelpCenterQuestionDetail,
 } from "@/types/support/HelpCenterTypes";
-import api from "../../lib/axios/apiSetup";
 
 export async function getHelpCenterQuestionsAndCategories(
   category?: string,
   slug?: string,
 ) {
   try {
-    const response = await api.get<HelpCenterCategories>(
-      "/help-center-categories",
-      { params: { category, slug } },
-    );
+    const params = new URLSearchParams();
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    if (category) {
+      params.append("category", category);
     }
 
-    return response.data;
+    if (slug) {
+      params.append("slug", slug);
+    }
+
+    const res = await fetch(
+      `${baseUrl}/help-center-categories?${params.toString()}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        next: { revalidate: 86400 },
+      },
+    );
+
+    const data: HelpCenterCategories = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
+    }
+
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -33,15 +50,20 @@ export async function getHelpCenterQuestionDetail(
   slug: string,
 ) {
   try {
-    const response = await api.get<HelpCenterQuestionDetail>(
-      `/help-center/${category}/${slug}`,
-    );
+    const res = await fetch(`${baseUrl}/help-center/${category}/${slug}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 86400 },
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: HelpCenterQuestionDetail = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

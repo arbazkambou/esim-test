@@ -1,8 +1,9 @@
 import { Country } from "@/helpers/generateSiteMap";
 import {
   globalErrorHandler,
-  globalResponseHanlder,
+  globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   CountriesThatHavePackagesResponeType,
   GetContinentsResponse,
@@ -16,18 +17,23 @@ import {
   SearchPackagesList,
   SearchPackagesListReturn,
 } from "@/types/packages/data-only/SearchPackagesList";
-import api from "../../lib/axios/apiSetup";
 import { TopDestinations } from "@/types/packages/data-only/TopDestinations";
 
 export async function getCountriesThatHavePackages(): Promise<Country[]> {
   try {
-    const response =
-      await api.get<CountriesThatHavePackagesResponeType>("/packages/country");
+    const response = await fetch(`${baseUrl}/packages/country`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 86400 },
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const apiData: CountriesThatHavePackagesResponeType = await response.json();
+
+    if (!response.ok || !apiData.status) {
+      globalResponseHandler(apiData, response.status);
     }
-    const data = response.data.data;
+    const data = apiData.data;
 
     const modifiedData = data.map((item) => ({
       ...item,
@@ -42,14 +48,19 @@ export async function getCountriesThatHavePackages(): Promise<Country[]> {
 
 export async function getContinentsThatHavePackages() {
   try {
-    const response = await api.get<GetContinentsResponse>(
-      "/packages/continent",
-    );
+    const response = await fetch(`${baseUrl}/packages/continent`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 86400 },
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const apiData: GetContinentsResponse = await response.json();
+
+    if (!response.ok || !apiData.status) {
+      globalResponseHandler(apiData, response.status);
     }
-    const data = response.data.data;
+    const data = apiData.data;
 
     const modifiedData = data.map((item) => ({
       ...item,
@@ -64,32 +75,20 @@ export async function getContinentsThatHavePackages() {
 
 export async function getPackagesOfCountry(countrySlug: string) {
   try {
-    const response = await api.get<CountryPackagesRespone>(
-      `/packages/country/${countrySlug}`,
-    );
+    const response = await fetch(`${baseUrl}/packages/country/${countrySlug}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 86400 },
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const apiData: CountryPackagesRespone = await response.json();
+
+    if (!response.ok || !apiData.status) {
+      globalResponseHandler(apiData, response.status);
     }
 
-    return response.data.data;
-  } catch (error) {
-    throw new Error(globalErrorHandler(error));
-  }
-}
-
-export async function getUnlimitedPackagesOfCountry(countrySlug: string) {
-  try {
-    const response = await api.get<CountryPackagesRespone>(
-      `/packages/country/${countrySlug}`,
-      { params: { unlimited: true } },
-    );
-
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
-    }
-
-    return response.data.data.data;
+    return apiData.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -97,15 +96,20 @@ export async function getUnlimitedPackagesOfCountry(countrySlug: string) {
 
 export async function getGlobalPackages(): Promise<PackagesData> {
   try {
-    const response = await api.get<GlobalPackageResponse>(`/packages/global`, {
-      params: { unlimited: true },
+    const response = await fetch(`${baseUrl}/packages/global`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 86400 },
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const apiData: GlobalPackageResponse = await response.json();
+
+    if (!response.ok || !apiData.status) {
+      globalResponseHandler(apiData, response.status);
     }
 
-    const globalPackagesResponse = response.data.data;
+    const globalPackagesResponse = apiData.data;
 
     const { data: packages, ...metaData } = globalPackagesResponse;
 
@@ -132,16 +136,23 @@ export async function getGlobalPackages(): Promise<PackagesData> {
 
 export async function getPackagesOfRegion(regionSlug: string) {
   try {
-    const response = await api.get<CountryPackagesRespone>(
-      `/packages/continent/${regionSlug}`,
-      { params: { unlimited: true } },
+    const response = await fetch(
+      `${baseUrl}/packages/continent/${regionSlug}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        next: { revalidate: 86400 },
+      },
     );
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const apiData: CountryPackagesRespone = await response.json();
+
+    if (!response.ok || !apiData.status) {
+      globalResponseHandler(apiData, response.status);
     }
 
-    return response.data.data;
+    return apiData.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -149,10 +160,16 @@ export async function getPackagesOfRegion(regionSlug: string) {
 
 export async function searchPackagesList(): Promise<SearchPackagesListReturn> {
   try {
-    const response = await api.get<SearchPackagesList>(`/search-package-list`);
+    const response = await fetch(`${baseUrl}/search-package-list`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const apiData: SearchPackagesList = await response.json();
+
+    if (!response.ok || !apiData.status) {
+      globalResponseHandler(apiData, response.status);
     }
 
     const {
@@ -162,7 +179,7 @@ export async function searchPackagesList(): Promise<SearchPackagesListReturn> {
       local_voice,
       regional,
       regional_voice,
-    } = response.data.data;
+    } = apiData.data;
 
     const globalDataOnly: { href: string; countries: Country[] } = {
       href: "global",
@@ -209,13 +226,19 @@ export async function searchPackagesList(): Promise<SearchPackagesListReturn> {
 
 export async function getTopDestinations() {
   try {
-    const response = await api.get<TopDestinations>("/top-destinations");
+    const response = await fetch(`${baseUrl}/top-destinations`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const apiData: TopDestinations = await response.json();
+
+    if (!response.ok || !apiData.status) {
+      globalResponseHandler(apiData, response.status);
     }
 
-    return response.data.data;
+    return apiData.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

@@ -1,7 +1,6 @@
 "use client";
 
 import countryImage from "@/_assets/images/countryImg.png";
-import Reveal from "@/components/animations/Reveal";
 import CheckCompatibilityModal from "@/components/my-ui/modals/CheckCompatibilityModal";
 import PagesMeta from "@/components/my-ui/shared/PagesMeta";
 import TrustpilotWidget from "@/components/my-ui/shared/TrustpilotWidget";
@@ -9,10 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
-import { cardVariantPrimary } from "@/lib/animations";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addItem, getTotalCartItems } from "@/redux/slices/cartSlice";
 import { PackagesData } from "@/types/packages/data-only/DataOnlyCountryPackages";
+import { sendGTMEvent } from "@next/third-parties/google";
 import { ArrowUpLeft, ListFilter, Plane } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -23,7 +22,6 @@ import IncDecButtons from "../cart/IncDecButtons";
 import CountryPackageCard from "./CountryPackageCard";
 import DataVoicePackageCard from "./DataVoicePackageCard";
 import InfoMessage from "./InfoMessage";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 function CountryPackagesList({
   packages,
@@ -341,12 +339,7 @@ function CountryPackagesList({
               >
                 {limitedPackages.map((item, index) =>
                   item.package_type !== "DATA-VOICE-SMS" ? (
-                    <Reveal
-                      key={index}
-                      variants={cardVariantPrimary}
-                      custom={index}
-                      once={false}
-                    >
+                    <div key={index}>
                       <CountryPackageCard
                         key={index}
                         packageDetail={item}
@@ -355,14 +348,9 @@ function CountryPackagesList({
                         selectedPackageId={selectedPackageId}
                         countryInfoAndPackages={packages.data}
                       />
-                    </Reveal>
+                    </div>
                   ) : (
-                    <Reveal
-                      key={index}
-                      variants={cardVariantPrimary}
-                      custom={index}
-                      once={false}
-                    >
+                    <div key={index}>
                       <DataVoicePackageCard
                         selectedPackageId={selectedPackageId}
                         setSelectedPackageId={setSelectedPackageId}
@@ -371,7 +359,7 @@ function CountryPackagesList({
                         key={index}
                         countryInfoAndPackages={packages.data}
                       />
-                    </Reveal>
+                    </div>
                   ),
                 )}
               </RadioGroup>
@@ -386,12 +374,7 @@ function CountryPackagesList({
               >
                 {unlimitedPackages.map((item, index) =>
                   item.package_type !== "DATA-VOICE-SMS" ? (
-                    <Reveal
-                      key={index}
-                      variants={cardVariantPrimary}
-                      custom={index}
-                      once={false}
-                    >
+                    <div key={index}>
                       <CountryPackageCard
                         key={index}
                         packageDetail={item}
@@ -400,14 +383,9 @@ function CountryPackagesList({
                         selectedPackageId={selectedPackageId}
                         countryInfoAndPackages={packages.data}
                       />
-                    </Reveal>
+                    </div>
                   ) : (
-                    <Reveal
-                      key={index}
-                      custom={index}
-                      variants={cardVariantPrimary}
-                      once={false}
-                    >
+                    <div key={index}>
                       <DataVoicePackageCard
                         selectedPackageId={selectedPackageId}
                         setSelectedPackageId={setSelectedPackageId}
@@ -416,7 +394,7 @@ function CountryPackagesList({
                         key={index}
                         countryInfoAndPackages={packages.data}
                       />
-                    </Reveal>
+                    </div>
                   ),
                 )}
               </RadioGroup>

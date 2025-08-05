@@ -1,11 +1,4 @@
 import stars from "@/_assets/svgs/5Star.svg";
-import {
-  heroImageVariants,
-  heroTextVariants,
-  socialButtonsVariants,
-} from "@/lib/animations";
-import Reveal from "@/components/animations/Reveal";
-import RevealAuto from "@/components/animations/RevealAuto";
 import Image from "next/image";
 import SocialsButtons from "../../features/auth/SocialsButtons";
 
@@ -18,10 +11,7 @@ function AppInstall({ title, description }: PropsType) {
   return (
     <section className="relative mt-16 bg-primary-gradient pb-[3rem] pt-[3.5rem] xl:container sm:rounded-[2.5rem] xl:mt-36">
       <div className="grid gap-x-12 gap-y-8 xl:grid-cols-2">
-        <Reveal
-          className="flex flex-col items-center gap-8 xl:items-start xl:ps-8"
-          variants={heroTextVariants}
-        >
+        <div className="flex flex-col items-center gap-8 xl:items-start xl:ps-8">
           {/* <p className="flex items-center justify-center gap-4 text-xs text-background xl:justify-start">
             <span className="font-700">Excellent</span>
             <span>
@@ -73,16 +63,13 @@ function AppInstall({ title, description }: PropsType) {
               </p>
             )}
           </div>
-          <Reveal className="z-50" variants={socialButtonsVariants}>
+          <div className="z-50">
             <SocialsButtons />
-          </Reveal>
-        </Reveal>
+          </div>
+        </div>
         <div>
           {/* Mobile phone image - visible on smaller screens */}
-          <RevealAuto
-            className="relative h-[360px] w-full xl:hidden"
-            variants={heroImageVariants}
-          >
+          <div className="relative h-[360px] w-full xl:hidden">
             <Image
               src="/images/phones.png"
               alt="Mobile app on phones"
@@ -90,12 +77,11 @@ function AppInstall({ title, description }: PropsType) {
               sizes="(max-width: 1279px) 100vw, 0vw"
               className="object-contain"
             />
-          </RevealAuto>
+          </div>
 
           {/* Desktop phone image - visible only on xl screens and above */}
-          <Reveal
+          <div
             className={`absolute -right-0 -top-[8.5rem] hidden h-[490px] w-full xl:block`}
-            variants={heroTextVariants}
           >
             <Image
               src="/images/phoneLg.png"
@@ -104,7 +90,7 @@ function AppInstall({ title, description }: PropsType) {
               sizes="(min-width: 1280px) 50vw, 0vw"
               className="object-contain object-right"
             />
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

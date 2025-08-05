@@ -1,22 +1,29 @@
 import {
   globalErrorHandler,
-  globalResponseHanlder,
+  globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   PostContactUsData,
   PostContactUsDataInputs,
 } from "@/types/support/SupportTypes";
-import api from "../../lib/axios/apiSetup";
 
-export async function postContactUsData(data: PostContactUsDataInputs) {
+export async function postContactUsData(inputs: PostContactUsDataInputs) {
   try {
-    const response = await api.post<PostContactUsData>("/contact-us", {
-      ...data,
+    const res = await fetch(`${baseUrl}/contact-us`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...inputs }),
     });
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+
+    const data: PostContactUsData = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
-    return response.data.message;
+
+    return data.message;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

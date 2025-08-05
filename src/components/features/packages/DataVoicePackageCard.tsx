@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import PackageDetailModal from "./PackageDetailModal";
-import { scrollToAddToCartIfMobile } from "@/helpers/scrollToAddToCart";
 
 function DataVoicePackageCard({
   selectedPackageId,
@@ -58,7 +57,7 @@ function DataVoicePackageCard({
       className={`group relative rounded-md border-2 shadow-none transition-all hover:border-primary ${index === 1 && "rounded-t-none"} hover:cursor-pointer hover:shadow-xl ${selectedPackageId === packageDetail.id && "border-primary shadow-xl"} h-max`}
       onClick={() => {
         setSelectedPackageId(packageDetail.id);
-        scrollToAddToCartIfMobile();
+        // scrollToAddToCartIfMobile();
       }}
     >
       {/* Best Choice Badge */}

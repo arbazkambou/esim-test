@@ -1,9 +1,19 @@
 import {
   globalErrorHandler,
-  globalResponseHanlder,
+  globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { baseUrl } from "@/lib/fetch/apiSetup";
+import { ApplyPromoCode } from "@/types/purchase/ApplyPromoCode";
 import { MyEsims } from "@/types/purchase/MyEsims";
 import { OrderHistory } from "@/types/purchase/OrderHistory";
+import { LatestPurchase } from "@/types/purchase/PurchaseGTMEvent";
+import {
+  PurchasePackages,
+  PurchasePackagesAsGuest,
+  PurchasePackagesAsGuestInputs,
+  PurchasePackagesInputs,
+} from "@/types/purchase/PurchasePackages";
+import { ShowDiscountTimer } from "@/types/purchase/ShowDiscountTimer";
 import { SimRelatedPackages } from "@/types/purchase/SimRelatedPackages";
 import { DataVoiceSimUsage, SimUsage } from "@/types/purchase/SimUsage";
 import {
@@ -11,26 +21,25 @@ import {
   WalletRefillInputs,
   WalletRefresh,
 } from "@/types/purchase/WalletRefill";
-import api from "../../lib/axios/apiSetup";
-import {
-  PurchasePackages,
-  PurchasePackagesAsGuest,
-  PurchasePackagesAsGuestInputs,
-  PurchasePackagesInputs,
-} from "@/types/purchase/PurchasePackages";
-import { ApplyPromoCode } from "@/types/purchase/ApplyPromoCode";
-import { ShowDiscountTimer } from "@/types/purchase/ShowDiscountTimer";
-import { LatestPurchase } from "@/types/purchase/PurchaseGTMEvent";
+import Cookies from "js-cookie";
 
 export async function getOrderHistory() {
   try {
-    const response = await api.get<OrderHistory>("/user/order");
+    const token = Cookies.get("token");
+    const res = await fetch(`${baseUrl}/user/order`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: OrderHistory = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data.data;
+    return data.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -38,16 +47,21 @@ export async function getOrderHistory() {
 
 export async function getDataOnlySims() {
   try {
-    const response = await api.get<MyEsims>("/my-sims", {
-      params: {
-        type: "data",
+    const token = Cookies.get("token");
+    const res = await fetch(`${baseUrl}/my-sims`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: MyEsims = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
-    return response.data;
+
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -55,15 +69,22 @@ export async function getDataOnlySims() {
 
 export async function getDataVoiceSims() {
   try {
-    const response = await api.get<MyEsims>("/my-sims", {
-      params: { type: "voice" },
+    const token = Cookies.get("token");
+
+    const res = await fetch(`${baseUrl}/my-sims`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: MyEsims = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -74,18 +95,22 @@ export async function walletRefill({
   landing_redirect_url,
 }: WalletRefillInputs) {
   try {
-    const response = await api.get<WalletRefill>("/user/can-pay", {
-      params: { amount, landing_redirect_url },
+    const token = Cookies.get("token");
+
+    const params = new URLSearchParams({
+      amount,
+      landing_redirect_url,
+    });
+    const res = await fetch(`${baseUrl}/user/can-pay?${params.toString()}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
 
-    if (!response.data.data.verified || !response.data.status) {
-      if (response.data.message) {
-        throw new Error(response.data.message);
-      } else {
-        throw new Error("Something went wrong during wallet refill");
-      }
-    }
-    return response.data.data;
+    const data: WalletRefill = await res.json();
+
+    return data.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -93,15 +118,22 @@ export async function walletRefill({
 
 export async function walletRefresh(tid: string | null) {
   try {
-    const response = await api.get<WalletRefresh>(
-      `/user/refill/refresh/${tid}`,
-    );
+    const token = Cookies.get("token");
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const res = await fetch(`${baseUrl}/user/refill/refresh/${tid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: WalletRefresh = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -109,14 +141,22 @@ export async function walletRefresh(tid: string | null) {
 
 export async function getSimRelatedPackages(simId: string) {
   try {
-    const response = await api.get<SimRelatedPackages>(
-      `/my-sim/${simId}/related-packages`,
-    );
+    const token = Cookies.get("token");
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const res = await fetch(`${baseUrl}/my-sim/${simId}/related-packages`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: SimRelatedPackages = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
-    return response.data.data;
+
+    return data.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -124,13 +164,22 @@ export async function getSimRelatedPackages(simId: string) {
 
 export async function getDataOnlySimUsage(simId: string) {
   try {
-    const response = await api.get<SimUsage>(`/my-sim/${simId}/usage`);
+    const token = Cookies.get("token");
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const res = await fetch(`${baseUrl}/my-sim/${simId}/usage`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: SimUsage = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -138,19 +187,28 @@ export async function getDataOnlySimUsage(simId: string) {
 
 export async function getDataVoiceSimUsage(simId: string) {
   try {
-    const response = await api.get<DataVoiceSimUsage>(
-      `/my-sim/data-voice/${simId}/usage`,
-    );
+    const token = Cookies.get("token");
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const res = await fetch(`${baseUrl}/my-sim/data-voice/${simId}/usage`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: DataVoiceSimUsage = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
 }
+
+// other
 
 export async function purchasePackages({
   cartItems,
@@ -166,20 +224,31 @@ export async function purchasePackages({
       recurring: item.recurring,
     }));
 
-    const response = await api.post<PurchasePackages>("/package-purchase", {
-      bundles: bundlesToPurchase,
-      promo_code: promoCode ? promoCode : null,
-      imei,
-      zipcode: zip_code,
-      zip_code,
-      redirect_url,
+    const token = Cookies.get("token");
+
+    const res = await fetch(`${baseUrl}/package-purchase`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        bundles: bundlesToPurchase,
+        promo_code: promoCode ? promoCode : null,
+        imei,
+        zipcode: zip_code,
+        zip_code,
+        redirect_url,
+      }),
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: PurchasePackages = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -195,18 +264,29 @@ export async function applyPromoCode({
       quantity: item.quantity,
     }));
 
-    const response = await api.post<ApplyPromoCode>("/checkout-summary", {
-      bundles: bundlesToPurchase,
-      promo_code: promoCode ? promoCode : null,
+    const token = Cookies.get("token");
+
+    const res = await fetch(`${baseUrl}/checkout-summary`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        bundles: bundlesToPurchase,
+        promo_code: promoCode ? promoCode : null,
+      }),
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: ApplyPromoCode = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    response.data.data.promo_code = promoCode;
+    data.data.promo_code = promoCode;
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -222,18 +302,26 @@ export async function applyPromoCodeAsGuest({
       quantity: item.quantity,
     }));
 
-    const response = await api.post<ApplyPromoCode>("/guest-checkout", {
-      bundles: bundlesToPurchase,
-      promo_code: promoCode ? promoCode : null,
+    const res = await fetch(`${baseUrl}/guest-checkout`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        bundles: bundlesToPurchase,
+        promo_code: promoCode ? promoCode : null,
+      }),
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: ApplyPromoCode = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    response.data.data.promo_code = promoCode;
+    data.data.promo_code = promoCode;
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -255,9 +343,12 @@ export async function purchasePackagesAsGuest({
       recurring: item.recurring,
     }));
 
-    const response = await api.post<PurchasePackagesAsGuest>(
-      "/guest-checkout-session",
-      {
+    const res = await fetch(`${baseUrl}/guest-checkout-session`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
         bundles: bundlesToPurchase,
         promo_code: promoCode ? promoCode : null,
         email,
@@ -268,19 +359,20 @@ export async function purchasePackagesAsGuest({
         type: "api",
         guest: "guest",
         redirect_url,
-      },
-    );
+      }),
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: PurchasePackagesAsGuest = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
 }
-
 export type RedeemSimInputs = {
   iccid: string;
   gCaptchaToken: string;
@@ -291,15 +383,23 @@ export async function redeemSimUsage({
   gCaptchaToken,
 }: RedeemSimInputs) {
   try {
-    const response = await api.post<SimUsage>(`/redeem/${iccid}`, {
-      "g-recaptcha-response": gCaptchaToken,
+    const res = await fetch(`${baseUrl}/redeem/${iccid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "g-recaptcha-response": gCaptchaToken,
+      }),
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: SimUsage = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -307,15 +407,22 @@ export async function redeemSimUsage({
 
 export async function showDiscountTimer() {
   try {
-    const response = await api.get<ShowDiscountTimer>(
-      `/user/show-discount-timer`,
-    );
+    const token = Cookies.get("token");
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const res = await fetch(`${baseUrl}/user/show-discount-timer`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: ShowDiscountTimer = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data.data.show_discount_timer;
+    return data.data.show_discount_timer;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -323,15 +430,22 @@ export async function showDiscountTimer() {
 
 export async function getLatestPurchaseForGTM() {
   try {
-    const response = await api.get<LatestPurchase>(
-      "/latest-purchase-for-tag-manager",
-    );
+    const token = Cookies.get("token");
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const res = await fetch(`${baseUrl}/latest-purchase-for-tag-manager`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: LatestPurchase = await res.json();
+
+    if (!res.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, res.status));
     }
 
-    return response.data.data;
+    return data.data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

@@ -1,8 +1,6 @@
 "use client";
 
 import stars from "@/_assets/svgs/5StarsBrown.svg";
-import Reveal from "@/components/animations/Reveal";
-import { pricingCardVariants } from "@/lib/animations";
 import Image, { StaticImageData } from "next/image";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -63,7 +61,7 @@ function Reviews({ title, reviews }: PropsType) {
       >
         {reviews.map((item, index) => (
           <SwiperSlide className="mb-8" key={index}>
-            <Reveal variants={pricingCardVariants} custom={index} once={false}>
+            <div>
               <Card
                 className="mt-[2.62rem] flex min-h-[400px] flex-col justify-between gap-3 p-8 transition-all hover:border-primary"
                 key={index}
@@ -115,7 +113,7 @@ function Reviews({ title, reviews }: PropsType) {
                   </p>
                 </div>
               </Card>
-            </Reveal>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

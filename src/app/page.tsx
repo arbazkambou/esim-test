@@ -15,7 +15,6 @@ import AppInstall from "@/components/my-ui/presentational/AppInstall";
 import EsimCompatible from "@/components/my-ui/presentational/EsimCompatible";
 import EsimSteps from "@/components/my-ui/presentational/EsimSteps";
 import FAQs from "@/components/my-ui/presentational/FAQs";
-import SiteMapSection from "@/components/my-ui/presentational/SiteMapSection";
 import WhyEsim from "@/components/my-ui/presentational/WhyEsim";
 import { seoData } from "@/lib/seoConfig";
 import { Metadata } from "next";
@@ -327,7 +326,7 @@ function Page() {
         title="What Our Customers Have to Say About eSIMCard"
         reviews={reviews}
       />
-      <SiteMapSection />
+      {/* <SiteMapSection /> */}
       <FAQs accordionsData={accordionData} />
       <AppInstall />
     </>

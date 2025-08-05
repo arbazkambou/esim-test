@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -39,6 +40,7 @@ const nextConfig = {
   },
   trailingSlash: true,
   experimental: {
+    instrumentationHook: true,
     missingSuspenseWithCSRBailout: false,
   },
 
@@ -325,4 +327,9 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: "codiea",
+  project: "esimcard-next",
+  silent: true,
+  disableLogger: true,
+});

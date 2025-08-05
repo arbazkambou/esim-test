@@ -171,12 +171,9 @@ function Page() {
       content: [
         {
           type: "text",
-          text: "At eSIMcard.com, we take your privacy seriously and use your personal information responsibly. Here’s a straightforward explanation of what we do with the information we",
+          text: "At eSIMcard.com, we take your privacy seriously and use your personal information responsibly. Here’s a straightforward explanation of what we do with the information we collect from you to Improve Our Services. We use your information to improve our services. This includes fixing problems, updating our website, and improving user experience.",
         },
-        {
-          type: "bold",
-          text: "collect from you: To Improve Our Services: We use your information to improve our services. This includes fixing problems, updating our website, and improving user experience.",
-        },
+
         {
           type: "bold",
           text: "Account Management: We need your details to manage your account. This means we use your information to communicate about your account and help you when you need it. Promotions and Customer Service: If you join any promotions or contests, we use your information to manage these activities. We also use your information to answer your questions and help when you contact us.",
@@ -212,11 +209,11 @@ function Page() {
       content: [
         {
           type: "text",
-          text: "At eSIMcard.com, we believe in being transparent about using your information. Here's",
+          text: "At eSIMcard.com, we believe in being transparent about using your information. Here's what you need to know:",
         },
         {
           type: "bold",
-          text: "what you need to know: Sharing with Service Providers: We work with other companies who help us run our business. For example, we might share your information with payment processors or customer service providers. We only share what they need to do their job, and they're not allowed to use it for anything else.",
+          text: "Sharing with Service Providers: We work with other companies who help us run our business. For example, we might share your information with payment processors or customer service providers. We only share what they need to do their job, and they're not allowed to use it for anything else.",
         },
         {
           type: "bold",

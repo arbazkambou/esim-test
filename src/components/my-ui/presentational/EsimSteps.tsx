@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
 import step3 from "@/_assets/images/activatePlan.png";
 import step1 from "@/_assets/images/buyDataPlan.png";
 import step2 from "@/_assets/images/installEsim.png";
+import Image from "next/image";
+import { useRef } from "react";
 
 interface PropsType {
   title?: string;
@@ -36,42 +35,6 @@ function EsimSteps({ title, description }: PropsType) {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLDivElement | null)[]>(steps.map(() => null));
-  const [stepVisibility, setStepVisibility] = useState<boolean[]>(
-    steps.map(() => false),
-  );
-
-  // Set up intersection observer to track when each step is visible
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-
-    const observerCallback =
-      (index: number) => (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setStepVisibility((prev) => {
-              const newState = [...prev];
-              newState[index] = true;
-              return newState;
-            });
-          }
-        });
-      };
-
-    stepRefs.current.forEach((ref, index) => {
-      const observer = new IntersectionObserver(observerCallback(index), {
-        threshold: 0.3,
-      });
-
-      if (ref) {
-        observer.observe(ref);
-        observers.push(observer);
-      }
-    });
-
-    return () => {
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, []);
 
   return (
     <section className="container mt-16 bg-background">
@@ -104,28 +67,10 @@ function EsimSteps({ title, description }: PropsType) {
         <div className="absolute left-1/2 top-0 hidden h-full w-1 -translate-x-1/2 xl:block">
           <div className="h-full w-full rounded-full bg-muted">
             {steps.map((_, index) => {
-              // Calculate the segment height based on the number of steps
-              const segmentHeight = `${100 / steps.length}%`;
-              const top = `${(index * 100) / steps.length}%`;
-
               return (
-                <motion.div
+                <div
                   key={`line-${index}`}
                   className="absolute w-full rounded-full bg-primary"
-                  style={{
-                    top,
-                    height: segmentHeight,
-                    originY: 0,
-                  }}
-                  initial={{ scaleY: 0 }}
-                  animate={{
-                    scaleY: stepVisibility[index] ? 1 : 0,
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    ease: "easeInOut",
-                    delay: 0.2,
-                  }}
                 />
               );
             })}
@@ -143,15 +88,7 @@ function EsimSteps({ title, description }: PropsType) {
           >
             {index % 2 === 0 ? (
               <>
-                <motion.div
-                  className="relative order-1 h-[360px] w-full sm:w-[417px] md:order-none"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{
-                    opacity: stepVisibility[index] ? 1 : 0,
-                    y: stepVisibility[index] ? 0 : -20,
-                  }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
+                <div className="relative order-1 h-[360px] w-full sm:w-[417px] md:order-none">
                   <Image
                     src={step.image || "/placeholder.svg"}
                     alt={`${step.title} image`}
@@ -160,17 +97,9 @@ function EsimSteps({ title, description }: PropsType) {
                     quality={70}
                     className="rounded-[1.875rem] object-contain"
                   />
-                </motion.div>
+                </div>
 
-                <motion.div
-                  className="flex max-w-[320px] flex-col gap-4"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{
-                    opacity: stepVisibility[index] ? 1 : 0,
-                    y: stepVisibility[index] ? 0 : 20,
-                  }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
+                <div className="flex max-w-[320px] flex-col gap-4">
                   <p className="text-center font-montserrat text-[2.42rem] font-500 text-foreground-light/95 md:text-start md:text-[2.8125rem]">
                     {step.number}
                   </p>
@@ -180,19 +109,11 @@ function EsimSteps({ title, description }: PropsType) {
                   <p className="text-center text-[1.2rem] text-muted-foreground md:text-start md:text-[1.5rem]">
                     {step.description}
                   </p>
-                </motion.div>
+                </div>
               </>
             ) : (
               <>
-                <motion.div
-                  className="flex max-w-[320px] flex-col gap-4"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{
-                    opacity: stepVisibility[index] ? 1 : 0,
-                    y: stepVisibility[index] ? 0 : -20,
-                  }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
+                <div className="flex max-w-[320px] flex-col gap-4">
                   <p className="text-center font-montserrat text-[2.42rem] font-500 text-foreground-light/95 md:text-start md:text-[2.8125rem]">
                     {step.number}
                   </p>
@@ -202,17 +123,9 @@ function EsimSteps({ title, description }: PropsType) {
                   <p className="text-center text-[1.2rem] text-muted-foreground md:text-start md:text-[1.5rem]">
                     {step.description}
                   </p>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  className="relative h-[360px] w-full sm:w-[417px]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{
-                    opacity: stepVisibility[index] ? 1 : 0,
-                    y: stepVisibility[index] ? 0 : 20,
-                  }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                >
+                <div className="relative h-[360px] w-full sm:w-[417px]">
                   <Image
                     src={step.image || "/placeholder.svg"}
                     alt={`${step.title} image`}
@@ -221,7 +134,7 @@ function EsimSteps({ title, description }: PropsType) {
                     quality={70}
                     className="rounded-[1.875rem] object-contain"
                   />
-                </motion.div>
+                </div>
               </>
             )}
           </div>

@@ -2,7 +2,6 @@ import CheckoutPage from "@/components/pages/CheckoutPage";
 import { seoData } from "@/lib/seoConfig";
 import { Metadata } from "next";
 import { PageParams } from "../page";
-import AnimatedLayout from "@/components/animations/AnimatedLayout";
 
 export async function generateMetadata({
   params,
@@ -15,9 +14,9 @@ export async function generateMetadata({
 
 function Page() {
   return (
-    <AnimatedLayout>
-      <CheckoutPage />
-    </AnimatedLayout>
+    // <AnimatedLayout>
+    <CheckoutPage />
+    // </AnimatedLayout>
   );
 }
 

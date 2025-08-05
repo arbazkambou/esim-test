@@ -1,7 +1,6 @@
 import fiveg from "@/_assets/svgs/5g.svg";
 import { Card } from "@/components/ui/card";
 import { RadioGroupItem } from "@/components/ui/radio-group";
-import { scrollToAddToCartIfMobile } from "@/helpers/scrollToAddToCart";
 import {
   CountryInfoAndPackages,
   Package,
@@ -44,7 +43,7 @@ function CountryPackageCard({
       className={`group relative rounded-md border-2 shadow-none transition-all hover:border-primary ${index === 1 && "rounded-t-none"} hover:cursor-pointer hover:shadow-xl ${selectedPackageId === packageDetail.id && "border-primary shadow-xl"} h-max`}
       onClick={() => {
         setSelectedPackageId(packageDetail.id);
-        scrollToAddToCartIfMobile();
+        // scrollToAddToCartIfMobile();
       }}
     >
       {/* Best Choice Badge */}

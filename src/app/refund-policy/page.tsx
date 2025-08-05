@@ -40,7 +40,7 @@ function Page() {
         },
         {
           type: "bold",
-          text: "Data Package Validity: No refunds are offered once the eSIM is installed and used.",
+          text: "Data Package Validity:  No refunds are available for any remaining data after the validity period of a data package expires.",
         },
         {
           type: "bold",

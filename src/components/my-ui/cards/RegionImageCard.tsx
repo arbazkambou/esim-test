@@ -1,6 +1,4 @@
 "use client";
-import { cardVariantPrimary } from "@/lib/animations";
-import Reveal from "@/components/animations/Reveal";
 import { generateSlug } from "@/helpers/generateSlug";
 import { ArrowUpRight } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
@@ -13,10 +11,10 @@ interface PropsType {
   imgSrc: StaticImageData;
   index?: number;
 }
-function RegionImageCard({ name, slug, imgSrc, index }: PropsType) {
+function RegionImageCard({ name, slug, imgSrc }: PropsType) {
   const pathName = usePathname();
   return (
-    <Reveal variants={cardVariantPrimary} custom={index} className="w-full">
+    <div className="w-full">
       <Link
         href={
           pathName === "/data-voice-sms/regional/"
@@ -49,7 +47,7 @@ function RegionImageCard({ name, slug, imgSrc, index }: PropsType) {
           />
         </div>
       </Link>
-    </Reveal>
+    </div>
   );
 }
 

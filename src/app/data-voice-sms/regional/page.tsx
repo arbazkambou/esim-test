@@ -1,6 +1,14 @@
-import { heroTextVariants } from "@/lib/animations";
-import Reveal from "@/components/animations/Reveal";
+import appStore from "@/_assets/svgs/appStore.svg";
+import client1 from "@/_assets/svgs/client1.svg";
+import client2 from "@/_assets/svgs/client2.svg";
+import client3 from "@/_assets/svgs/client3.svg";
+import client4 from "@/_assets/svgs/client4.svg";
+import client5 from "@/_assets/svgs/client5.svg";
+import client6 from "@/_assets/svgs/client6.svg";
+import playStore from "@/_assets/svgs/playStore.svg";
 import { PageParams } from "@/app/page";
+import CountryRegionNavigation from "@/components/features/packages/CountryRegionNavigation";
+import RegionsWithDataVoice from "@/components/features/packages/RegionsWithDataVoice";
 import AdvantagesCard from "@/components/my-ui/cards/AdvantagesCard";
 import Reviews from "@/components/my-ui/carousels/Reviews";
 import CountryRegionsHero from "@/components/my-ui/heros/CountryRegionsHero";
@@ -12,16 +20,6 @@ import { seoData } from "@/lib/seoConfig";
 import { DollarSign, Globe, List, Plane, Signal, Zap } from "lucide-react";
 import { Metadata } from "next";
 import { Suspense } from "react";
-import appStore from "@/_assets/svgs/appStore.svg";
-import client1 from "@/_assets/svgs/client1.svg";
-import client2 from "@/_assets/svgs/client2.svg";
-import client3 from "@/_assets/svgs/client3.svg";
-import client4 from "@/_assets/svgs/client4.svg";
-import client5 from "@/_assets/svgs/client5.svg";
-import client6 from "@/_assets/svgs/client6.svg";
-import playStore from "@/_assets/svgs/playStore.svg";
-import RegionsWithDataVoice from "@/components/features/packages/RegionsWithDataVoice";
-import CountryRegionNavigation from "@/components/features/packages/CountryRegionNavigation";
 
 export const revalidate = Number(process.env.REVALIDATE_TIME);
 
@@ -183,14 +181,14 @@ function Page() {
 
       {/* regions with data voice packages  */}
       <section className="container mt-16">
-        <Reveal variants={heroTextVariants}>
+        <div>
           <h2 className="text-center font-montserrat text-h2-base font-600 leading-normal md:text-h2-md xl:text-start xl:text-h2-xl">
             Discover Regional eSIM{" "}
             <div className="mt-1 inline xl:block">
               Options In different Regions
             </div>
           </h2>
-        </Reveal>
+        </div>
 
         <Suspense
           fallback={

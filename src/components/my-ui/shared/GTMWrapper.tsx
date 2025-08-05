@@ -1,7 +1,7 @@
 "use client";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { GoogleTagManager } from "@next/third-parties/google";
 
 export default function GTMWrapper() {
   const pathname = usePathname();
@@ -15,9 +15,9 @@ export default function GTMWrapper() {
     }
 
     // Delay on other routes
-    const timer = setTimeout(() => {
-      setShouldRender(true);
-    }, 12000);
+    // const timer = setTimeout(() => {
+    //   setShouldRender(true);
+    // }, 12000);
 
     //immediate render when any click event happen
     function handleClick() {
@@ -27,7 +27,7 @@ export default function GTMWrapper() {
     document.addEventListener("click", handleClick);
 
     return () => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
       document.removeEventListener("click", handleClick);
     };
   }, [pathname, shouldRender]);

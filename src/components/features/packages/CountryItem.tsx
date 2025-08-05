@@ -1,7 +1,5 @@
-import { searchResultVariants } from "@/lib/animations";
 import { sendGTMEvent } from "@next/third-parties/google";
 import { ChevronRight } from "lucide-react";
-import { motion } from "motion/react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
@@ -12,13 +10,9 @@ interface PropsType {
   countryName: string;
 }
 
-function CountryItem({ index, countryName, href, image_url }: PropsType) {
+function CountryItem({ countryName, href, image_url }: PropsType) {
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      custom={index}
-      variants={searchResultVariants}
+    <div
       onClick={() =>
         sendGTMEvent({
           event: "search",
@@ -44,7 +38,7 @@ function CountryItem({ index, countryName, href, image_url }: PropsType) {
 
         <ChevronRight size={22} />
       </Link>
-    </motion.div>
+    </div>
   );
 }
 

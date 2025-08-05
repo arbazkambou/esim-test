@@ -7,9 +7,10 @@ import client5 from "@/_assets/svgs/client5.svg";
 import client6 from "@/_assets/svgs/client6.svg";
 import playStore from "@/_assets/svgs/playStore.svg";
 import regionalHero from "@/_assets/svgs/regionalHero.svg";
-import Reveal from "@/components/animations/Reveal";
-import { heroTextVariants } from "@/lib/animations";
+import CountryRegionNavigation from "@/components/features/packages/CountryRegionNavigation";
+import RegionsWithDataOnly from "@/components/features/packages/RegionsWithDataOnly";
 import AdvantagesCard from "@/components/my-ui/cards/AdvantagesCard";
+import Reviews from "@/components/my-ui/carousels/Reviews";
 import CountryRegionsHero from "@/components/my-ui/heros/CountryRegionsHero";
 import AppInstall from "@/components/my-ui/presentational/AppInstall";
 import FAQs from "@/components/my-ui/presentational/FAQs";
@@ -20,9 +21,6 @@ import { DollarSign, Globe, List, Plane, Signal, Zap } from "lucide-react";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { PageParams } from "../page";
-import Reviews from "@/components/my-ui/carousels/Reviews";
-import RegionsWithDataOnly from "@/components/features/packages/RegionsWithDataOnly";
-import CountryRegionNavigation from "@/components/features/packages/CountryRegionNavigation";
 
 export const revalidate = Number(process.env.REVALIDATE_TIME);
 
@@ -191,14 +189,14 @@ function Page() {
 
       {/* Regional data only packages  */}
       <section className="container mt-16">
-        <Reveal variants={heroTextVariants}>
+        <div>
           <h2 className="text-center font-montserrat text-h2-base font-600 leading-normal md:text-h2-md xl:text-start xl:text-h2-xl">
             Discover Regional eSIM{" "}
             <div className="mt-1 inline xl:block">
               Options In different Regions
             </div>
           </h2>
-        </Reveal>
+        </div>
 
         <Suspense
           fallback={

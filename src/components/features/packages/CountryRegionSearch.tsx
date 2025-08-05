@@ -1,19 +1,17 @@
 "use client";
 
 import globalImg from "@/_assets/svgs/globalMap.svg";
-import { searchDropdownVariants } from "@/lib/animations";
 import { cleanString } from "@/helpers/cleanString";
+import { isSearchQueryMatch } from "@/helpers/isSearchQueryMatch";
 import { cn } from "@/lib/utils";
 import { SearchPackagesListReturn } from "@/types/packages/data-only/SearchPackagesList";
-import { AnimatePresence, motion } from "framer-motion";
+import { TopDestination } from "@/types/packages/data-only/TopDestinations";
+import { sendGTMEvent } from "@next/third-parties/google";
 import { Search } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../../ui/input";
 import CountryItem from "./CountryItem";
-import { usePathname } from "next/navigation";
-import { TopDestination } from "@/types/packages/data-only/TopDestinations";
-import { isSearchQueryMatch } from "@/helpers/isSearchQueryMatch";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 interface PropsType {
   searchInputStyle?: string;
@@ -178,169 +176,154 @@ function CountryRegionSearch({
       <Search className="absolute right-3 top-1/2 -translate-y-1/2 transform text-primary" />
 
       {/* Search Dropdown with AnimatePresence */}
-      <AnimatePresence>
-        {showSuggestions && searchQuery && (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={searchDropdownVariants}
-            exit={"exit"}
-            className="barMini absolute top-[56px] flex max-h-[320px] w-full flex-col overflow-auto rounded-md bg-background py-4 ps-3 shadow-2xl"
-          >
-            {isDataLoading ? (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-sm"
-              >
-                Searching...
-              </motion.p>
-            ) : isPackages ? (
-              <div className="flex flex-col gap-4">
-                {!isDataVoicePage && isDataOnlyPackages && (
-                  <div>
-                    <p className="mb-2 ps-2 font-montserrat text-[18px] font-semibold leading-none text-primary">
-                      Data Only
-                    </p>
+      {showSuggestions && searchQuery && (
+        <div className="barMini absolute top-[56px] flex max-h-[320px] w-full flex-col overflow-auto rounded-md bg-background py-4 ps-3 shadow-2xl">
+          {isDataLoading ? (
+            <p className="text-sm">Searching...</p>
+          ) : isPackages ? (
+            <div className="flex flex-col gap-4">
+              {!isDataVoicePage && isDataOnlyPackages && (
+                <div>
+                  <p className="mb-2 ps-2 font-montserrat text-[18px] font-semibold leading-none text-primary">
+                    Data Only
+                  </p>
 
-                    {isDataOnlyLocal && (
-                      <div>
-                        {/* <p className="p-2 text-sm font-500 text-muted-foreground">
+                  {isDataOnlyLocal && (
+                    <div>
+                      {/* <p className="p-2 text-sm font-500 text-muted-foreground">
                           Countries
                         </p> */}
-                        {filteredPackagesList?.dataOnly.local.map(
-                          (item, index) => (
-                            <CountryItem
-                              countryName={item.name}
-                              image_url={item.image_url}
-                              index={index}
-                              href={item.href}
-                              key={index}
-                            />
-                          ),
-                        )}
-                      </div>
-                    )}
+                      {filteredPackagesList?.dataOnly.local.map(
+                        (item, index) => (
+                          <CountryItem
+                            countryName={item.name}
+                            image_url={item.image_url}
+                            index={index}
+                            href={item.href}
+                            key={index}
+                          />
+                        ),
+                      )}
+                    </div>
+                  )}
 
-                    {isDataOnlyRegional && (
-                      <div>
-                        <p className="p-2 text-sm font-500 text-muted-foreground">
-                          Regional
-                        </p>
-                        {filteredPackagesList?.dataOnly.regional.map(
-                          (item, index) => (
-                            <CountryItem
-                              countryName={item.name}
-                              image_url={item.image_url}
-                              index={index}
-                              href={item.href}
-                              key={index}
-                            />
-                          ),
-                        )}
-                      </div>
-                    )}
+                  {isDataOnlyRegional && (
+                    <div>
+                      <p className="p-2 text-sm font-500 text-muted-foreground">
+                        Regional
+                      </p>
+                      {filteredPackagesList?.dataOnly.regional.map(
+                        (item, index) => (
+                          <CountryItem
+                            countryName={item.name}
+                            image_url={item.image_url}
+                            index={index}
+                            href={item.href}
+                            key={index}
+                          />
+                        ),
+                      )}
+                    </div>
+                  )}
 
-                    {isDataOnlyGlobal && (
-                      <div>
-                        <p className="p-2 text-sm font-500 text-muted-foreground">
-                          Global
-                        </p>
-                        <CountryItem
-                          countryName={"Global"}
-                          image_url={globalImg}
-                          index={1}
-                          href={"/global/"}
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
+                  {isDataOnlyGlobal && (
+                    <div>
+                      <p className="p-2 text-sm font-500 text-muted-foreground">
+                        Global
+                      </p>
+                      <CountryItem
+                        countryName={"Global"}
+                        image_url={globalImg}
+                        index={1}
+                        href={"/global/"}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
-                {isDataVoicePackages && (
-                  <div>
-                    <p className="mb-2 ps-2 font-montserrat text-[18px] font-semibold leading-none text-primary">
-                      Data / Voice / SMS
-                    </p>
+              {isDataVoicePackages && (
+                <div>
+                  <p className="mb-2 ps-2 font-montserrat text-[18px] font-semibold leading-none text-primary">
+                    Data / Voice / SMS
+                  </p>
 
-                    {isDataVoiceLocal && (
-                      <div>
-                        {/* <p className="p-2 text-sm font-500 text-muted-foreground">
+                  {isDataVoiceLocal && (
+                    <div>
+                      {/* <p className="p-2 text-sm font-500 text-muted-foreground">
                           Countries
                         </p> */}
-                        {filteredPackagesList?.dataVoice.local.map(
-                          (item, index) => (
-                            <CountryItem
-                              countryName={item.name}
-                              image_url={item.image_url}
-                              index={index}
-                              href={item.href}
-                              key={index}
-                            />
-                          ),
-                        )}
-                      </div>
-                    )}
+                      {filteredPackagesList?.dataVoice.local.map(
+                        (item, index) => (
+                          <CountryItem
+                            countryName={item.name}
+                            image_url={item.image_url}
+                            index={index}
+                            href={item.href}
+                            key={index}
+                          />
+                        ),
+                      )}
+                    </div>
+                  )}
 
-                    {isDataVoiceRegional && (
-                      <div>
-                        <p className="p-2 text-sm font-500 text-muted-foreground">
-                          Regional
-                        </p>
-                        {filteredPackagesList?.dataVoice.regional.map(
-                          (item, index) => (
-                            <CountryItem
-                              countryName={item.name}
-                              image_url={item.image_url}
-                              index={index}
-                              href={item.href}
-                              key={index}
-                            />
-                          ),
-                        )}
-                      </div>
-                    )}
+                  {isDataVoiceRegional && (
+                    <div>
+                      <p className="p-2 text-sm font-500 text-muted-foreground">
+                        Regional
+                      </p>
+                      {filteredPackagesList?.dataVoice.regional.map(
+                        (item, index) => (
+                          <CountryItem
+                            countryName={item.name}
+                            image_url={item.image_url}
+                            index={index}
+                            href={item.href}
+                            key={index}
+                          />
+                        ),
+                      )}
+                    </div>
+                  )}
 
-                    {isDataVoiceGlobal && (
-                      <div>
-                        <p className="p-2 text-sm font-500 text-muted-foreground">
-                          Global
-                        </p>
-                        <CountryItem
-                          countryName={"Global"}
-                          image_url={globalImg}
-                          index={0}
-                          href={"/international-esim/"}
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div>
-                <p className="ps-2 text-sm">
-                  No match found — check out our top destinations!
-                </p>
+                  {isDataVoiceGlobal && (
+                    <div>
+                      <p className="p-2 text-sm font-500 text-muted-foreground">
+                        Global
+                      </p>
+                      <CountryItem
+                        countryName={"Global"}
+                        image_url={globalImg}
+                        index={0}
+                        href={"/international-esim/"}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div>
+              <p className="ps-2 text-sm">
+                No match found — check out our top destinations!
+              </p>
 
-                <p className="my-2 ps-2 font-montserrat text-[18px] font-semibold leading-none text-primary">
-                  Top Destinations
-                </p>
-                {topDesinations?.map((item, index) => (
-                  <CountryItem
-                    countryName={item.name}
-                    image_url={item.image_url}
-                    index={index}
-                    href={`/esim/${item.slug}/`}
-                    key={index}
-                  />
-                ))}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <p className="my-2 ps-2 font-montserrat text-[18px] font-semibold leading-none text-primary">
+                Top Destinations
+              </p>
+              {topDesinations?.map((item, index) => (
+                <CountryItem
+                  countryName={item.name}
+                  image_url={item.image_url}
+                  index={index}
+                  href={`/esim/${item.slug}/`}
+                  key={index}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

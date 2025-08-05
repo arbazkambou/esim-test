@@ -1,7 +1,8 @@
 import {
   globalErrorHandler,
-  globalResponseHanlder,
+  globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   LoginUserInputType,
   LoginUserResponseType,
@@ -9,7 +10,6 @@ import {
 } from "@/types/auth/LoginUserTypes";
 import {
   SendPasswordResetDataInputType,
-  SendPasswordResetDataResponseType,
   SendPasswordResetPinResponseType,
 } from "@/types/auth/PasswordResetTypes";
 import {
@@ -20,20 +20,26 @@ import {
   SendOTPInputType,
   SendOTPResponseType,
 } from "@/types/auth/sendOTPTypes";
-import api from "../../lib/axios/apiSetup";
 
 export async function sendOTP({ email, password }: SendOTPInputType) {
   try {
-    const response = await api.post<SendOTPResponseType>("/send-otp", {
-      email,
-      password,
+    const response = await fetch(`${baseUrl}/send-otp`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      method: "POST",
+
+      body: JSON.stringify({ email, password }),
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: SendOTPResponseType = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, response.status));
     }
 
-    return response.data.message;
+    return data.message;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -45,33 +51,29 @@ export async function registerUser({
   password,
   otp,
   is_affiliate,
-  phone_number,
 }: RegisterUserInputTypes) {
   try {
-    let response;
-    if (is_affiliate) {
-      response = await api.post<RegisterUserResponseType>("/register", {
+    const response = await fetch(`${baseUrl}/register`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         name,
         email,
         password,
         otp,
-        is_affiliate,
-        phone_number,
-      });
-    } else {
-      response = await api.post<RegisterUserResponseType>("/register", {
-        name,
-        email,
-        password,
-        otp,
-        phone_number,
-      });
+        is_affiliate: is_affiliate ? is_affiliate : false,
+      }),
+      method: "POST",
+    });
+
+    const data: RegisterUserResponseType = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, response.status));
     }
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
-    }
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -79,14 +81,21 @@ export async function registerUser({
 
 export async function loginUser({ email, password }: LoginUserInputType) {
   try {
-    const response = await api.post<LoginUserResponseType>("/login", {
-      email,
-      password,
+    const response = await fetch(`${baseUrl}/login`, {
+      body: JSON.stringify({ email, password }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+
+    const data: LoginUserResponseType = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, response.status));
     }
-    return response.data;
+
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -94,16 +103,22 @@ export async function loginUser({ email, password }: LoginUserInputType) {
 
 export async function sendPasswordResetPin(email: string) {
   try {
-    const response = await api.post<SendPasswordResetPinResponseType>(
-      "/password-reset",
-      { email },
-    );
+    const response = await fetch(`${baseUrl}/password-reset`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+      body: JSON.stringify({ email }),
+    });
+
+    const data: SendPasswordResetPinResponseType = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, response.status));
     }
 
-    return response.data.message;
+    return data.message;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -116,21 +131,21 @@ export async function sendPasswordResetData({
   token,
 }: SendPasswordResetDataInputType) {
   try {
-    const response = await api.post<SendPasswordResetDataResponseType>(
-      "/password-reset/submit",
-      {
-        email,
-        password,
-        password_confirmation,
-        token,
+    const response = await fetch(`${baseUrl}/password-reset/submit`, {
+      method: "POST",
+      body: JSON.stringify({ email, password, password_confirmation, token }),
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(data, response.status));
     }
 
-    return response.data.message;
+    return data.message;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }
@@ -138,15 +153,21 @@ export async function sendPasswordResetData({
 
 export async function socialLogin(inputs: SocialLoginInputs) {
   try {
-    const response = await api.post<LoginUserResponseType>("/social/login", {
-      ...inputs,
+    const response = await fetch(`${baseUrl}/social/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...inputs }),
     });
 
-    if (!response.data.status) {
-      throw new Error(globalResponseHanlder(response));
+    const data: LoginUserResponseType = await response.json();
+
+    if (!response.ok || !data.status) {
+      throw new Error(globalResponseHandler(response, response.status));
     }
 
-    return response.data;
+    return data;
   } catch (error) {
     throw new Error(globalErrorHandler(error));
   }

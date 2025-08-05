@@ -1,11 +1,9 @@
 "use client";
 
-import { tabContentVariants } from "@/lib/animations";
-import Reveal from "@/components/animations/Reveal";
+import "@/components/my-ui/shared/PagesMeta.css";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PackagesData } from "@/types/packages/data-only/DataOnlyCountryPackages";
 import { useEffect, useState } from "react";
-import "@/components/my-ui/shared/PagesMeta.css";
 
 function PagesMeta({ packages }: { packages: PackagesData }) {
   const { name } = packages.data;
@@ -47,7 +45,7 @@ function PagesMeta({ packages }: { packages: PackagesData }) {
             className="flex w-full flex-col gap-1.5"
             forceMount={isMount}
           >
-            <Reveal variants={tabContentVariants}>
+            <div>
               <h2 className="text-h2-base font-500 text-foreground-light">
                 About eSIMCard's {name} eSIM
               </h2>
@@ -56,7 +54,7 @@ function PagesMeta({ packages }: { packages: PackagesData }) {
                   dangerouslySetInnerHTML={{ __html: packages.page_features }}
                 />
               </div>
-            </Reveal>
+            </div>
           </TabsContent>
         )}
         {packages.page_description && (
@@ -65,7 +63,7 @@ function PagesMeta({ packages }: { packages: PackagesData }) {
             className="flex w-full flex-col gap-2"
             forceMount={isMount}
           >
-            <Reveal variants={tabContentVariants}>
+            <div>
               <h2 className="text-h2-base font-500 text-foreground-light">
                 About eSIM Card's {name} eSIM
               </h2>
@@ -76,34 +74,17 @@ function PagesMeta({ packages }: { packages: PackagesData }) {
                   }}
                 />
               </div>
-            </Reveal>
+            </div>
           </TabsContent>
         )}
-         {/* {packages.page_compatibility && (
-          <TabsContent
-            value="compatibility"
-            className="flex w-full flex-col gap-1.5"
-            forceMount={isMount}
-          >
-            <Reveal variants={tabContentVariants}>
-              <h2 className="text-h2-base font-500 text-foreground-light">
-                {name} eSIM Compatible Devices
-              </h2>
-              <div className="custom-list text-body-base -tracking-[0.04rem] text-muted-foreground">
-                <div
-                  dangerouslySetInnerHTML={{ __html: packages.page_compatibility }}
-                />
-              </div>
-            </Reveal>
-          </TabsContent>
-        )} */}
+
         {packages.page_technical_specs && (
           <TabsContent
             value="specs"
             className="flex w-full flex-col gap-2"
             forceMount={isMount}
           >
-            <Reveal variants={tabContentVariants}>
+            <div>
               <h2 className="text-h2-base font-500 text-foreground-light">
                 Our Virtual SIM Specifications
               </h2>
@@ -114,7 +95,7 @@ function PagesMeta({ packages }: { packages: PackagesData }) {
                   }}
                 />
               </div>
-            </Reveal>
+            </div>
           </TabsContent>
         )}
       </Tabs>
