@@ -13,9 +13,7 @@ import {
   Settings2,
 } from "lucide-react";
 import Link from "next/link";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+
 import InstallationQrCode from "../sims/InstallationQrCode";
 import CopyButton from "../sims/CopyButton";
 import { SimUsage } from "@/types/purchase/SimUsage";

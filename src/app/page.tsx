@@ -1,4 +1,3 @@
-// import SiteMapSection from "@/components/my-ui/presentational/SiteMapSection";
 import appStore from "@/_assets/svgs/appStore.svg";
 import client1 from "@/_assets/svgs/client1.svg";
 import client2 from "@/_assets/svgs/client2.svg";
@@ -35,7 +34,7 @@ export async function generateMetadata({
 }
 
 function Page() {
-  const accordionsData = [
+  const accordionData = [
     {
       title: "Is eSIM good for travel?",
       body: "Absolutely! eSIM is fantastic for travel. It lets you hop from one country to another without the hassle of swapping SIM cards. Plus, you get to enjoy local data rates!",
@@ -326,8 +325,8 @@ function Page() {
         title="What Our Customers Have to Say About eSIMCard"
         reviews={reviews}
       />
-      {/* <SiteMapSection /> */}
-      <FAQs accordionsData={accordionsData} />
+      {/* /<SiteMapSection /> */}
+      <FAQs accordionsData={accordionData} />
       <AppInstall />
     </>
   );

@@ -8,27 +8,29 @@ export default function GTMWrapper() {
   const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
-    // Immediate load on thank-you route
+    if (shouldRender) return;
+
+    // Immediate GTM load for thank-you page
     if (pathname === "/sim-buy-thank-you/") {
       setShouldRender(true);
       return;
     }
 
-    // Delay on other routes
-    // const timer = setTimeout(() => {
-    //   setShouldRender(true);
-    // }, 12000);
-
-    //immediate render when any click event happen
-    function handleClick() {
+    const enableGTM = () => {
       setShouldRender(true);
-    }
+      document.removeEventListener("click", enableGTM);
+      document.removeEventListener("scroll", enableGTM);
+      document.removeEventListener("touchstart", enableGTM);
+    };
 
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", enableGTM, { once: true });
+    document.addEventListener("scroll", enableGTM, { once: true });
+    document.addEventListener("touchstart", enableGTM, { once: true });
 
     return () => {
-      // clearTimeout(timer);
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", enableGTM);
+      document.removeEventListener("scroll", enableGTM);
+      document.removeEventListener("touchstart", enableGTM);
     };
   }, [pathname, shouldRender]);
 

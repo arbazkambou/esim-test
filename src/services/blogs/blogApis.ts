@@ -6,6 +6,7 @@ import { BlogsSearchParams } from "@/app/blog/page";
 import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 
@@ -18,9 +19,13 @@ export async function getBlogs(searchParams: BlogsSearchParams) {
       next: { revalidate: 3600 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: Blogs = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(response, response.status));
     }
     return data.data;
@@ -38,8 +43,12 @@ export async function getBlogsCategories() {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: BlogCategories = await response.json();
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(response, response.status));
     }
     return data.data;
@@ -73,9 +82,12 @@ export async function getBlogDetail({
       },
     );
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
     const data: BlogDetailResponse = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(response, response.status));
     }
     return data.data;

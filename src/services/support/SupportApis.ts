@@ -1,5 +1,6 @@
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { baseUrl } from "@/lib/fetch/apiSetup";
@@ -17,9 +18,13 @@ export async function postContactUsData(inputs: PostContactUsDataInputs) {
       body: JSON.stringify({ ...inputs }),
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: PostContactUsData = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 

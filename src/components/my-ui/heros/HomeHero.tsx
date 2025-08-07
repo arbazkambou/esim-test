@@ -76,7 +76,6 @@ function HomeHero() {
             alt="eSIM Card We Connect You Globally"
             className="rounded-[1.8125rem] object-contain"
             sizes="auto"
-            // priority
             quality={50}
           />
 

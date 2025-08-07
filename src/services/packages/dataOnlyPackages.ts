@@ -1,6 +1,7 @@
 import { Country } from "@/helpers/generateSiteMap";
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { baseUrl } from "@/lib/fetch/apiSetup";
@@ -28,9 +29,13 @@ export async function getCountriesThatHavePackages(): Promise<Country[]> {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: CountriesThatHavePackagesResponeType = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
     const data = apiData.data;
@@ -55,9 +60,13 @@ export async function getContinentsThatHavePackages() {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: GetContinentsResponse = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
     const data = apiData.data;
@@ -82,9 +91,13 @@ export async function getPackagesOfCountry(countrySlug: string) {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: CountryPackagesRespone = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -103,9 +116,13 @@ export async function getGlobalPackages(): Promise<PackagesData> {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: GlobalPackageResponse = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -146,9 +163,13 @@ export async function getPackagesOfRegion(regionSlug: string) {
       },
     );
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: CountryPackagesRespone = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -166,9 +187,13 @@ export async function searchPackagesList(): Promise<SearchPackagesListReturn> {
       },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: SearchPackagesList = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -232,9 +257,13 @@ export async function getTopDestinations() {
       },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: TopDestinations = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 

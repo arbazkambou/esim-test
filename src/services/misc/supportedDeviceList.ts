@@ -1,5 +1,6 @@
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { SupportedDeviceResponseType } from "@/types/misc/CheckCompatibilityTypes";
@@ -15,9 +16,13 @@ export async function getSupportedDeviceList() {
       },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: SupportedDeviceResponseType = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, response.status));
     }
 

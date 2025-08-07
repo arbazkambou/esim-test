@@ -10,7 +10,7 @@ export default function TawkScript() {
   const [loadChat, setLoadChat] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setLoadChat(true), 15000);
+    const timeout = setTimeout(() => setLoadChat(true), 20000);
     return () => clearTimeout(timeout);
   }, []);
 

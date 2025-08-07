@@ -5,9 +5,7 @@ import { Card } from "@/components/ui/card";
 import { formatDateTime } from "@/helpers/formatDateTime";
 import { SimUsage } from "@/types/purchase/SimUsage";
 import { Calendar, Code, Globe, Loader, Microchip, Phone } from "lucide-react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+
 import CopyButton from "../sims/CopyButton";
 import QrCodeGenerator from "../sims/QrCodeGenerator";
 

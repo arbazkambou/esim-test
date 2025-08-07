@@ -1,5 +1,3 @@
-"use client";
-
 import esimSS from "@/_assets/images/esimSS.png";
 import { Button } from "@/components/ui/button";
 import { ArrowUpLeft } from "lucide-react";

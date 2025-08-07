@@ -1,5 +1,6 @@
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { baseUrl } from "@/lib/fetch/apiSetup";
@@ -33,9 +34,13 @@ export async function getOrderHistory() {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: OrderHistory = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -55,9 +60,13 @@ export async function getDataOnlySims() {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: MyEsims = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -78,9 +87,13 @@ export async function getDataVoiceSims() {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: MyEsims = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -108,6 +121,10 @@ export async function walletRefill({
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: WalletRefill = await res.json();
 
     return data.data;
@@ -127,9 +144,13 @@ export async function walletRefresh(tid: string | null) {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: WalletRefresh = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -150,9 +171,13 @@ export async function getSimRelatedPackages(simId: string) {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: SimRelatedPackages = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -173,9 +198,13 @@ export async function getDataOnlySimUsage(simId: string) {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: SimUsage = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -196,9 +225,13 @@ export async function getDataVoiceSimUsage(simId: string) {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: DataVoiceSimUsage = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -242,9 +275,13 @@ export async function purchasePackages({
       }),
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: PurchasePackages = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -278,9 +315,13 @@ export async function applyPromoCode({
       }),
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: ApplyPromoCode = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -313,9 +354,13 @@ export async function applyPromoCodeAsGuest({
       }),
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: ApplyPromoCode = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -362,9 +407,13 @@ export async function purchasePackagesAsGuest({
       }),
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: PurchasePackagesAsGuest = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -393,9 +442,13 @@ export async function redeemSimUsage({
       }),
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: SimUsage = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -416,9 +469,13 @@ export async function showDiscountTimer() {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: ShowDiscountTimer = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -439,9 +496,13 @@ export async function getLatestPurchaseForGTM() {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: LatestPurchase = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 

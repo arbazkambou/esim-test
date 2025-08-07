@@ -29,5 +29,15 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/sim-buy-thank-you", "/"],
+  matcher: [
+    "/esim",
+    "/esim/:path*",
+    "/regional",
+    "/regional/:path*",
+    "/global",
+    "/international-esim",
+    "/sim-buy-thank-you",
+    "/",
+    "/:path*-esim",
+  ],
 };

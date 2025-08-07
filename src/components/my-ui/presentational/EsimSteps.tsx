@@ -1,15 +1,13 @@
-"use client";
-
 import step3 from "@/_assets/images/activatePlan.png";
 import step1 from "@/_assets/images/buyDataPlan.png";
 import step2 from "@/_assets/images/installEsim.png";
 import Image from "next/image";
-import { useRef } from "react";
 
 interface PropsType {
   title?: string;
   description?: string;
 }
+
 function EsimSteps({ title, description }: PropsType) {
   // Use placeholder images instead of the imports that don't exist
   const steps = [
@@ -32,9 +30,6 @@ function EsimSteps({ title, description }: PropsType) {
       image: step3,
     },
   ];
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>(steps.map(() => null));
 
   return (
     <section className="container mt-16 bg-background">
@@ -59,10 +54,7 @@ function EsimSteps({ title, description }: PropsType) {
       </div>
 
       {/* steps with progress line */}
-      <div
-        ref={containerRef}
-        className="relative mx-auto mt-[4rem] flex max-w-[1000px] flex-col gap-16"
-      >
+      <div className="relative mx-auto mt-[4rem] flex max-w-[1000px] flex-col gap-16">
         {/* Progress Line - Hidden on mobile, visible on md and up */}
         <div className="absolute left-1/2 top-0 hidden h-full w-1 -translate-x-1/2 xl:block">
           <div className="h-full w-full rounded-full bg-muted">
@@ -81,9 +73,6 @@ function EsimSteps({ title, description }: PropsType) {
         {steps.map((step, index) => (
           <div
             key={step.number}
-            ref={(el) => {
-              stepRefs.current[index] = el;
-            }}
             className="flex flex-col items-center gap-8 md:flex-row md:justify-between"
           >
             {index % 2 === 0 ? (

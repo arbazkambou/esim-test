@@ -1,5 +1,6 @@
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { baseUrl } from "@/lib/fetch/apiSetup";
@@ -33,9 +34,13 @@ export async function sendOTP({ email, password }: SendOTPInputType) {
       body: JSON.stringify({ email, password }),
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: SendOTPResponseType = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, response.status));
     }
 
@@ -67,9 +72,13 @@ export async function registerUser({
       method: "POST",
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: RegisterUserResponseType = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, response.status));
     }
 
@@ -89,9 +98,13 @@ export async function loginUser({ email, password }: LoginUserInputType) {
       },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: LoginUserResponseType = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, response.status));
     }
 
@@ -112,9 +125,13 @@ export async function sendPasswordResetPin(email: string) {
       body: JSON.stringify({ email }),
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: SendPasswordResetPinResponseType = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, response.status));
     }
 
@@ -139,9 +156,13 @@ export async function sendPasswordResetData({
       },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, response.status));
     }
 
@@ -161,9 +182,13 @@ export async function socialLogin(inputs: SocialLoginInputs) {
       body: JSON.stringify({ ...inputs }),
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const data: LoginUserResponseType = await response.json();
 
-    if (!response.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(response, response.status));
     }
 

@@ -1,5 +1,6 @@
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { baseUrl } from "@/lib/fetch/apiSetup";
@@ -33,9 +34,13 @@ export async function getHelpCenterQuestionsAndCategories(
       },
     );
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: HelpCenterCategories = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
@@ -57,9 +62,13 @@ export async function getHelpCenterQuestionDetail(
       next: { revalidate: 86400 },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: HelpCenterQuestionDetail = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 

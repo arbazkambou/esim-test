@@ -1,13 +1,18 @@
 "use client";
 
-import stars from "@/_assets/svgs/5StarsBrown.svg";
+import { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Card } from "../../ui/card";
+import { Card } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
+import stars from "@/_assets/svgs/5StarsBrown.svg";
+import { cn } from "@/lib/utils";
 
 interface Review {
   name: string;
@@ -15,15 +20,46 @@ interface Review {
   date: string;
   title: string;
   review: string;
-  store: StaticImageData; // You can replace 'any' with a specific type if `store` refers to a defined constant or type
-  imgSrc: StaticImageData; // Assuming image source is a string (e.g., a path or import reference)
+  store: StaticImageData;
+  imgSrc: StaticImageData;
 }
 
 interface PropsType {
   reviews: Review[];
   title: string;
 }
+
 function Reviews({ title, reviews }: PropsType) {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [api]);
+
   return (
     <section className="container relative mt-16 bg-background">
       <h2 className="text-center font-montserrat text-h2-base font-600 text-foreground md:text-h2-md xl:text-start xl:text-h2-xl">
@@ -33,46 +69,29 @@ function Reviews({ title, reviews }: PropsType) {
         Wireless service subscribers using eSIM
       </p>
 
-      <Swiper
-        spaceBetween={20}
-        slidesPerView={3}
-        modules={[Pagination, Navigation, Autoplay]}
-        pagination={{ clickable: true, el: ".custom-pagination" }}
-        className="mySwiper"
-        speed={1000}
-        autoplay={{
-          delay: 2000,
-          disableOnInteraction: true,
-        }}
-        loop={true}
-        breakpoints={{
-          1240: {
-            slidesPerView: 3,
-          },
-
-          840: {
-            slidesPerView: 2,
-          },
-
-          0: {
-            slidesPerView: 1,
-          },
+      <Carousel
+        setApi={setApi}
+        className="mt-[2.62rem] w-full"
+        opts={{
+          align: "start",
+          loop: true,
         }}
       >
-        {reviews.map((item, index) => (
-          <SwiperSlide className="mb-8" key={index}>
-            <div>
-              <Card
-                className="mt-[2.62rem] flex min-h-[400px] flex-col justify-between gap-3 p-8 transition-all hover:border-primary"
-                key={index}
-              >
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {reviews.map((item, index) => (
+            <CarouselItem
+              key={index}
+              className="basis-full pl-2 md:basis-1/2 md:pl-4 xl:basis-1/3"
+            >
+              <Card className="flex min-h-[400px] flex-col justify-between gap-3 p-8 transition-all hover:border-primary">
                 <div className="flex items-center gap-3">
                   <div className="relative h-[50px] w-[50px]">
                     <Image
-                      src={item.imgSrc}
+                      src={item.imgSrc || "/placeholder.svg"}
                       alt={item.title}
                       fill
-                      sizes="auto"
+                      sizes="50px"
+                      className="rounded-full object-cover"
                     />
                   </div>
                   <div className="flex flex-col justify-center">
@@ -81,22 +100,20 @@ function Reviews({ title, reviews }: PropsType) {
                     </p>
                   </div>
                 </div>
-
                 <h3 className="text-body-md font-700 text-foreground-light">
                   {item.title}
                 </h3>
                 <p className="text-body-base text-muted-foreground">
                   {item.review}
                 </p>
-
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="relative h-[25px] w-[28px]">
                       <Image
-                        src={item.store}
+                        src={item.store || "/placeholder.svg"}
                         alt="App Store"
                         fill
-                        sizes="auto"
+                        sizes="28px"
                       />
                     </div>
                     <div className="relative h-[30px] w-[100px]">
@@ -104,7 +121,7 @@ function Reviews({ title, reviews }: PropsType) {
                         src={stars}
                         alt="5Stars Rating"
                         fill
-                        sizes="auto"
+                        sizes="100px"
                       />
                     </div>
                   </div>
@@ -113,12 +130,28 @@ function Reviews({ title, reviews }: PropsType) {
                   </p>
                 </div>
               </Card>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden md:flex" />
+        <CarouselNext className="hidden md:flex" />
+      </Carousel>
 
-      <div className="custom-pagination flex items-center justify-center" />
+      {/* Custom pagination dots */}
+      <div className="mt-8 flex items-center justify-center gap-2">
+        {Array.from({ length: count }).map((_, index) => (
+          <button
+            key={index}
+            className={cn(
+              "h-2 w-2 rounded-full transition-all",
+              current === index + 1
+                ? "w-6 bg-primary"
+                : "bg-muted-foreground/30 hover:bg-muted-foreground/50",
+            )}
+            onClick={() => api?.scrollTo(index)}
+          />
+        ))}
+      </div>
     </section>
   );
 }

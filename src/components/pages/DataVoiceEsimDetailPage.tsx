@@ -6,9 +6,6 @@ import { getDataVoiceSimUsage } from "@/services/purchase/purchaseApis";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 function DataVoiceEsimDetailPage({ params }: { params: { slug: string } }) {
   const { isAuthenticated, isAuthLoading } = useAuth();

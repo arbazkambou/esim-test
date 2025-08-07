@@ -2,9 +2,7 @@
 
 import { DataVoiceSimUsage, SimUsage } from "@/types/purchase/SimUsage";
 import { CircleCheckBig, Gift, Hourglass, Package } from "lucide-react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+
 import { Spinner } from "../my-ui/fallbacks/Spinner";
 import { Card } from "../ui/card";
 import { formatDateTime } from "@/helpers/formatDateTime";

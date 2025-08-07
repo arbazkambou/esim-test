@@ -1,6 +1,7 @@
 import { generateSlug } from "@/helpers/generateSlug";
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { baseUrl } from "@/lib/fetch/apiSetup";
@@ -18,9 +19,13 @@ export async function getCountriesThatHaveDataVoicePackages() {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: CountriesThatHaveDataVoicePackages = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -47,9 +52,13 @@ export async function getContinentsThatHaveDataVoicePackages() {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: CountriesThatHaveDataVoicePackages = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -77,9 +86,13 @@ export async function getDataVoicePackagesOfCountry(
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: DataVoiceCountryPackages = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -100,9 +113,13 @@ export async function getDataVoicePackagesOfRegion(
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: DataVoiceCountryPackages = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 
@@ -121,9 +138,13 @@ export async function getDataVoiceGlobalPackages(): Promise<PackagesData> {
       next: { revalidate: 86400 },
     });
 
+    if (!response.ok) {
+      throw new Error(globalHttpErrorHandler(response));
+    }
+
     const apiData: DataVoiceGlobalPackages = await response.json();
 
-    if (!response.ok || !apiData.status) {
+    if (!apiData.status) {
       globalResponseHandler(apiData, response.status);
     }
 

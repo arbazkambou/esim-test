@@ -1,5 +1,6 @@
 import {
   globalErrorHandler,
+  globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
 import { baseUrl } from "@/lib/fetch/apiSetup";
@@ -16,9 +17,13 @@ export async function getUser() {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(globalHttpErrorHandler(res));
+    }
+
     const data: GetUserObject = await res.json();
 
-    if (!res.ok || !data.status) {
+    if (!data.status) {
       throw new Error(globalResponseHandler(data, res.status));
     }
 
