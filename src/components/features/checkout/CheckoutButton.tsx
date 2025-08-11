@@ -82,6 +82,8 @@ function CheckoutButton({
       redirect_url = `${window.location.origin}/sim-buy-thank-you/`;
     }
 
+    const reqIdConectia = Cookies.get("reqIdConectia");
+
     purchasePackagesApi({
       cartItems: cartItems,
       redirect_url,
@@ -90,6 +92,7 @@ function CheckoutButton({
         : referral
           ? referral
           : null,
+      reqIdConectia,
     });
   }
 

@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 function CheckoutSummaryItem({ cartItem }: { cartItem: CartState }) {
   const {

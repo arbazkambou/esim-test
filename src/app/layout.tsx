@@ -12,10 +12,10 @@ import type { Viewport } from "next";
 import { Montserrat, Poppins, Work_Sans } from "next/font/google";
 import Script from "next/script";
 import NextTopLoader from "nextjs-toploader";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import FloatingWhatsApp from "@/components/my-ui/shared/FloatingWhatsapp";
 import TawkScript from "@/components/my-ui/shared/TawkScript";
+import { Toaster } from "@/components/ui/sonner";
 
 const sans = Work_Sans({
   subsets: ["latin"],
@@ -70,12 +70,11 @@ export default function RootLayout({
           shadow="0 0 10px hsla(var(--primary)), 0 0 5px hsla(var(--primary))"
         />
         <Toaster
+          richColors
+          closeButton
           position="top-center"
-          reverseOrder={false}
-          toastOptions={{
-            duration: 5000,
-            style: { fontSize: "14px" },
-          }}
+          duration={5000}
+          swipeDirections={["right"]}
         />
         <ReactQueryProvider>
           <PromoCodeProvider>

@@ -21,7 +21,7 @@ import Cookies from "js-cookie";
 import { ArrowUpLeft, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 import SocialLogins from "../auth/SocialLogins";
 import PaymentMethods from "./PaymentMethods";
@@ -165,6 +165,8 @@ function PayAsGuest() {
       redirect_url = `${window.location.origin}/sim-buy-thank-you/`;
     }
 
+    const reqIdConectia = Cookies.get("reqIdConectia");
+
     //calls this api to facilitate guest purchase by sending relevent inputs
     purchasePackagesAsGuestApi({
       ...values,
@@ -175,6 +177,7 @@ function PayAsGuest() {
           ? referral
           : null,
       cartItems,
+      reqIdConectia,
     });
   }
 

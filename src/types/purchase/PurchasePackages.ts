@@ -14,6 +14,7 @@ export interface PurchasePackagesInputs {
   zip_code?: string;
   imei?: string;
   redirect_url?: string;
+  reqIdConectia?: string | undefined;
 }
 
 export interface PurchasePackagesAsGuestInputs {
@@ -24,6 +25,7 @@ export interface PurchasePackagesAsGuestInputs {
   redirect_url: string;
   name?: string;
   email?: string;
+  reqIdConectia?: string | undefined;
 }
 
 export interface PurchasePackagesAsGuest {

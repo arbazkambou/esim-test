@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { seoData } from "@/lib/seoConfig";
 import { PageParams } from "@/app/page";
 import { Suspense } from "react";
+import PageLoading from "@/components/my-ui/fallbacks/PageLoading";
 
 export async function generateMetadata({
   params,
@@ -15,7 +16,7 @@ export async function generateMetadata({
 
 function Page() {
   return (
-    <Suspense fallback={""}>
+    <Suspense fallback={<PageLoading />}>
       <RefillPage />
     </Suspense>
   );

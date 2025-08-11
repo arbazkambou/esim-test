@@ -9,7 +9,7 @@ function EsimCompatible() {
     "Pixel 4 and Later",
     "iPhone XS and Later",
     "Huawei P40 and Later",
-    "Samsung Galaxy S20 - S23 Series",
+    "Samsung Galaxy S20 - S25 Series",
   ];
   return (
     <section className="mt-16 bg-primary-gradient">

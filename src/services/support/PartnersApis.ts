@@ -3,6 +3,7 @@ import {
   globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { platformVersion } from "@/helpers/platform";
 import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   distributorPartnerInputs,
@@ -12,10 +13,11 @@ import {
 export async function postDistributorData(formData: distributorPartnerInputs) {
   try {
     const res = await fetch(`${baseUrl}/partner-distribution`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...formData }),
+      body: JSON.stringify({ ...formData, ...platformVersion }),
     });
 
     if (!res.ok) {

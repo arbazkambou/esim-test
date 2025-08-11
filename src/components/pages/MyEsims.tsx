@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import { RefreshCcw } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import PendingSimDetail from "../features/sims/PendingSimDetail";
 import SimDetail from "../features/sims/SimDetail";
 import SimDetailSkeleton from "../my-ui/fallbacks/SimDetailSkeleton";

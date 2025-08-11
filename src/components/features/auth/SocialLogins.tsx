@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import LoginRedirectionModal from "./LoginRedirectionModal";
 
 interface PropsType {

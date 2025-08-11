@@ -34,17 +34,7 @@ function Footer() {
         </>
       ),
     },
-    {
-      href: "#",
-      children: (
-        <>
-          <MapPin className="h-6 w-6 shrink-0" />
-          <p className="text-base xl:text-[13px] 2xl:text-base">
-            250 S. Ronald Reagan Blvd., #106, Longwood, FL 32750
-          </p>
-        </>
-      ),
-    },
+
     {
       href: "https://api.whatsapp.com/send/?phone=14072126950&text&type=phone_number&app_absent=0",
       children: (
@@ -87,6 +77,17 @@ function Footer() {
             <p>sales@esimcard.com</p>
             <Badge className="bg-primary">Business</Badge>
           </div>
+        </>
+      ),
+    },
+    {
+      href: "#",
+      children: (
+        <>
+          <MapPin className="h-6 w-6 shrink-0" />
+          <p className="text-body-base">
+            250 S. Ronald Reagan Blvd., #106, Longwood, FL 32750
+          </p>
         </>
       ),
     },

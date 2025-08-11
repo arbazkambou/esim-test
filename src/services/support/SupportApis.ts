@@ -3,6 +3,7 @@ import {
   globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { platformVersion } from "@/helpers/platform";
 import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   PostContactUsData,
@@ -12,10 +13,11 @@ import {
 export async function postContactUsData(inputs: PostContactUsDataInputs) {
   try {
     const res = await fetch(`${baseUrl}/contact-us`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...inputs }),
+      body: JSON.stringify({ ...inputs, ...platformVersion }),
     });
 
     if (!res.ok) {

@@ -8,7 +8,7 @@ import { SimUsage } from "@/types/purchase/SimUsage";
 import { useMutation } from "@tanstack/react-query";
 import { ChevronRight, Dot } from "lucide-react";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import EsimDetailsPage from "./EsimDetailsPage";
 
 function RedeemPage() {

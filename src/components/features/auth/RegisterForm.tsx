@@ -28,7 +28,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 import LoginRedirectionModal from "./LoginRedirectionModal";
 import SocialLogins from "./SocialLogins";
@@ -39,6 +39,8 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showRedirectionModal, setShowRedirectionModal] = useState(false);
   const [adminRole, setAdminRole] = useState<AdminRole | null>(null);
+  const [isOTPResending, setIsOTPResending] = useState(false);
+
   // const [isTermsAccepted, setIsTermsAccepted] = useState<
   //   boolean | CheckedState
   // >(false);
@@ -60,14 +62,19 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
     },
   });
 
+  const { getValues, resetField } = form;
+
   //this api is used to send user email and password to api then it will snd otp to the user provided email
   const { mutate: sendOTPApi, isPending: isSendingOTP } = useMutation({
     mutationFn: sendOTP,
     onSuccess: () => {
       toast.success("OTP has been sent to your email. Please Verify it.");
       setIsOTPSent(true);
+      resetField("otp");
+      setIsOTPResending(false);
     },
     onError: (error) => {
+      setIsOTPResending(false);
       toast.error(error.message);
     },
   });
@@ -106,6 +113,7 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
     //2.then email and password with otp to to register user
     //3.if user is affiliate then send a affiliate flags to the backend api
     // if (!isTermsAccepted) return;
+
     if (!isOTPSent) {
       sendOTPApi({ email: values.email, password: values.password });
     } else {
@@ -127,6 +135,18 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
           phone_number: values.phoneNumber,
         });
       }
+    }
+  }
+
+  function resendOTP() {
+    const email = getValues("email");
+    const password = getValues("password");
+
+    if (email && password) {
+      setIsOTPResending(true);
+      sendOTPApi({ email, password });
+    } else {
+      toast.error("Please enter email and password.");
     }
   }
 
@@ -204,6 +224,7 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
                   <FormControl>
                     <Input
                       placeholder=""
+                      autoComplete="new-password"
                       type={showPassword ? "text" : "password"}
                       {...field}
                       disabled={isSendingOTP || isUserRegistering}
@@ -226,6 +247,7 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
                     <FormControl>
                       <Input
                         placeholder=""
+                        autoComplete="new-password"
                         type={showPassword ? "text" : "password"}
                         {...field}
                         disabled={isSendingOTP || isUserRegistering}
@@ -238,7 +260,6 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
                       size="icon"
                       className="absolute right-0 top-0 h-full px-3 py-1.5 text-muted-foreground hover:bg-transparent hover:text-muted-foreground"
                       onClick={togglePasswordVisibility}
-                      disabled={isSendingOTP || isUserRegistering}
                     >
                       {showPassword ? (
                         <EyeOff className="h-6 w-6" />
@@ -278,31 +299,47 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
             )}
           />
           {isOTPSent && (
-            <FormField
-              control={form.control}
-              name="otp"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <label className="mb-[1rem] block text-sm text-muted-foreground">
-                        Enter OTP that you’ve received on your email
-                      </label>
+            <div className="flex flex-col gap-1.5">
+              <FormField
+                control={form.control}
+                name="otp"
+                disabled={isSendingOTP || isUserRegistering}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <label className="mb-[0.5rem] block text-sm text-muted-foreground">
+                          Enter OTP that you’ve received on your email
+                        </label>
 
-                      <InputOTP maxLength={4} {...field}>
-                        <InputOTPGroup>
-                          <InputOTPSlot index={0} />
-                          <InputOTPSlot index={1} />
-                          <InputOTPSlot index={2} />
-                          <InputOTPSlot index={3} />
-                        </InputOTPGroup>
-                      </InputOTP>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                        <InputOTP
+                          maxLength={4}
+                          {...field}
+                          disabled={isSendingOTP || isUserRegistering}
+                        >
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                            <InputOTPSlot index={3} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                size="sm"
+                className="w-max"
+                onClick={resendOTP}
+                type="button"
+                disabled={isSendingOTP || isUserRegistering}
+              >
+                {isSendingOTP ? <SpinnerMini /> : "Resend OTP"}
+              </Button>
+            </div>
           )}
 
           <div className="flex gap-2">
@@ -327,7 +364,11 @@ function RegisterForm({ isAffiliate }: { isAffiliate?: boolean }) {
             disabled={isSendingOTP || isUserRegistering}
             className="hover:bg-primary/90 hover:text-background"
           >
-            {isSendingOTP || isUserRegistering ? <SpinnerMini /> : "Register"}
+            {(isSendingOTP && !isOTPResending) || isUserRegistering ? (
+              <SpinnerMini />
+            ) : (
+              "Register"
+            )}
           </Button>
           <OrLine />
         </form>

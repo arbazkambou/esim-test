@@ -3,6 +3,7 @@ import {
   globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { platformVersion } from "@/helpers/platform";
 import { baseUrl } from "@/lib/fetch/apiSetup";
 import { ApplyPromoCode } from "@/types/purchase/ApplyPromoCode";
 import { MyEsims } from "@/types/purchase/MyEsims";
@@ -249,6 +250,7 @@ export async function purchasePackages({
   imei,
   zip_code,
   redirect_url,
+  reqIdConectia,
 }: PurchasePackagesInputs) {
   try {
     const bundlesToPurchase = cartItems.map((item) => ({
@@ -272,6 +274,8 @@ export async function purchasePackages({
         zipcode: zip_code,
         zip_code,
         redirect_url,
+        reqid: reqIdConectia,
+        ...platformVersion,
       }),
     });
 
@@ -308,10 +312,12 @@ export async function applyPromoCode({
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
+
       method: "POST",
       body: JSON.stringify({
         bundles: bundlesToPurchase,
         promo_code: promoCode ? promoCode : null,
+        ...platformVersion,
       }),
     });
 
@@ -351,6 +357,7 @@ export async function applyPromoCodeAsGuest({
       body: JSON.stringify({
         bundles: bundlesToPurchase,
         promo_code: promoCode ? promoCode : null,
+        ...platformVersion,
       }),
     });
 
@@ -380,6 +387,7 @@ export async function purchasePackagesAsGuest({
   redirect_url,
   email,
   name,
+  reqIdConectia,
 }: PurchasePackagesAsGuestInputs) {
   try {
     const bundlesToPurchase = cartItems.map((item) => ({
@@ -404,6 +412,8 @@ export async function purchasePackagesAsGuest({
         type: "api",
         guest: "guest",
         redirect_url,
+        reqid: reqIdConectia,
+        ...platformVersion,
       }),
     });
 
@@ -439,6 +449,7 @@ export async function redeemSimUsage({
       },
       body: JSON.stringify({
         "g-recaptcha-response": gCaptchaToken,
+        ...platformVersion,
       }),
     });
 

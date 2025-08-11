@@ -4,9 +4,14 @@ import FooterLink from "@/components/my-ui/links/FooterLink";
 import { Card } from "@/components/ui/card";
 import { useAppSelector } from "@/redux/hooks";
 import { CheckoutProgress } from "../features/checkout/CheckoutProgress";
+import { useAuth } from "@/providers/AuthProvider";
+import PageLoading from "../my-ui/fallbacks/PageLoading";
 
 function CheckoutPage() {
+  const { isAuthLoading } = useAuth();
   const cartItems = useAppSelector((state) => state.cart);
+
+  if (isAuthLoading) return <PageLoading />;
 
   return (
     <section suppressHydrationWarning>

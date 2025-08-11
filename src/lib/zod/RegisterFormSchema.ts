@@ -22,12 +22,14 @@ export function getRegisterFormSchema(isOTPSent: boolean) {
         .max(100, {
           message: "Confirm Password must be less than 100 characters.",
         }),
-      phoneNumber: z
-        .string()
-        .min(10, "Too short for a phone number")
-        .max(15, "Too long for a phone number")
-        .regex(/^\+?[0-9]{10,15}$/, "Invalid phone number format")
-        .optional(),
+      phoneNumber: z.preprocess(
+        (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+        z
+          .string()
+          .max(15, "Too long for a phone number")
+          .regex(/^\+?[0-9]{10,15}$/, "Invalid phone number format")
+          .optional(),
+      ),
 
       otp: isOTPSent
         ? z

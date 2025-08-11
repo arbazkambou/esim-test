@@ -8,7 +8,7 @@ import { sendGTMEvent } from "@next/third-parties/google";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 interface Propstype {
   paymentStatus: string;
@@ -35,9 +35,16 @@ function ThankYouPage({ paymentStatus }: Propstype) {
     if (isPaymentSuccess) {
       Cookies.set("showSurvey", "true");
       const referral = Cookies.get("referral");
+      const reqIdConectia = Cookies.get("reqIdConectia");
+
       if (referral) {
         Cookies.remove("referral");
       }
+
+      if (reqIdConectia) {
+        Cookies.remove("reqIdConectia");
+      }
+
       dispatch(clearCart());
       Cookies.remove("isPurchase");
     } else {

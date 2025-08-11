@@ -107,15 +107,6 @@
   .container {
     @apply xs:max-w-[560px] sm:max-w-[576px] md:max-w-[720px] lg:max-w-[992px] xl:max-w-[1245px] xxl:max-w-[1350px] 2xl:max-w-[1480px];
   }
-
-  /* global.css */
-  .custom-pagination .swiper-pagination-bullet {
-    @apply !mx-[6px] !my-0 !h-[10px] !w-[10px];
-  }
-
-  .custom-pagination .swiper-pagination-bullet-active {
-    @apply !bg-primary;
-  }
 }
 
 @layer utilities {

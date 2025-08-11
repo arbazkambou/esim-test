@@ -27,7 +27,7 @@ import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 import ApplyCouponCode from "../cart/ApplyCouponCode";
 import CheckoutButton from "./CheckoutButton";

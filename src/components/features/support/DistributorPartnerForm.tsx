@@ -26,7 +26,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 import { CountrySelect } from "./CountrySelect";
 import { LanguageSelect } from "./LanguageSelect";

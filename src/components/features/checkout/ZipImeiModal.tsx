@@ -74,6 +74,7 @@ function ZipImeiModal({
     if (typeof window !== undefined) {
       redirect_url = `${window.location.origin}/sim-buy-thank-you/`;
     }
+    const reqIdConectia = Cookies.get("reqIdConectia");
 
     purchasePackagesApi({
       ...values,
@@ -84,6 +85,7 @@ function ZipImeiModal({
         : referral
           ? referral
           : null,
+      reqIdConectia,
     });
   }
 

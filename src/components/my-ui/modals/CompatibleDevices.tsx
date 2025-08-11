@@ -9,7 +9,7 @@ import {
 import { getSupportedDeviceList } from "@/services/misc/supportedDeviceList";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { Spinner } from "../fallbacks/Spinner";
 import FooterLink from "../links/FooterLink";
 

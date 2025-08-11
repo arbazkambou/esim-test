@@ -22,11 +22,12 @@ import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+// import { toast } from "sonner";
 import { z } from "zod";
 import SocialLogins from "./SocialLogins";
 import LoginRedirectionModal from "./LoginRedirectionModal";
 import { AdminRole } from "@/types/auth/LoginUserTypes";
+import { toast } from "sonner";
 
 function LoginForm({ isAffiliate }: { isAffiliate?: boolean }) {
   const [showPassword, setShowPassword] = React.useState(false);

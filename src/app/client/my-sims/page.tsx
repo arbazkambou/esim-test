@@ -1,4 +1,5 @@
 import { PageParams } from "@/app/page";
+import PageLoading from "@/components/my-ui/fallbacks/PageLoading";
 import MyEsims from "@/components/pages/MyEsims";
 import { seoData } from "@/lib/seoConfig";
 import { Metadata } from "next";
@@ -15,7 +16,7 @@ export async function generateMetadata({
 
 function Page() {
   return (
-    <Suspense fallback={""}>
+    <Suspense fallback={<PageLoading />}>
       <MyEsims />
     </Suspense>
   );

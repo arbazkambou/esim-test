@@ -325,7 +325,7 @@ function Page() {
         title="What Our Customers Have to Say About eSIMCard"
         reviews={reviews}
       />
-      {/* /<SiteMapSection /> */}
+      {/* <SiteMapSection /> */}
       <FAQs accordionsData={accordionData} />
       <AppInstall />
     </>

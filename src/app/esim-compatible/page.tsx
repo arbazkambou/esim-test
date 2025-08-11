@@ -303,7 +303,7 @@ async function page() {
             <div className="relative mb-6 hidden h-[300px] w-full shrink-0 md:block md:w-[40%]">
               <Image
                 className=""
-                src={"/images/ipads.png"}
+                src={"/images/Ipad-pro.png"}
                 alt="iphone-mob"
                 quality={75}
                 // width={300}
@@ -808,7 +808,7 @@ async function page() {
             <div className="relative mb-6 hidden h-[300px] w-full shrink-0 md:block md:w-[40%]">
               <Image
                 className=""
-                src={"/images/oppo-mob.png"}
+                src={"/images/xiaomi-mob.png"}
                 alt="samsung-mob"
                 quality={75}
                 // width={300}

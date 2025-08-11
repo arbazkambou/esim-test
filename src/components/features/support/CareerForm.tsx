@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { careersFormSchema } from "@/lib/zod/CareersFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 import { ArrowUpLeft } from "lucide-react";
 import ReCAPTCHA from "react-google-recaptcha";

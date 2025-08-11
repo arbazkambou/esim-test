@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { getTotalCartItems } from "@/redux/slices/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { Minus, Plus } from "lucide-react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 interface PropsType {
   cartQuantity: number;

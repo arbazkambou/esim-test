@@ -12,11 +12,11 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addItem, getTotalCartItems } from "@/redux/slices/cartSlice";
 import { PackagesData } from "@/types/packages/data-only/DataOnlyCountryPackages";
 import { sendGTMEvent } from "@next/third-parties/google";
-import { ArrowUpLeft, ListFilter, Plane } from "lucide-react";
+import { ArrowUpLeft, Plane } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import CartSheet from "../cart/CartSheet";
 import IncDecButtons from "../cart/IncDecButtons";
 import CountryPackageCard from "./CountryPackageCard";
@@ -325,7 +325,7 @@ function CountryPackagesList({
             )}
 
             <TrustpilotWidget className="hidden md:block" />
-            <ListFilter size={24} />
+            {/* <ListFilter size={24} /> */}
           </div>
 
           {/* COuntry packages card   */}

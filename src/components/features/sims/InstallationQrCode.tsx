@@ -2,7 +2,7 @@
 
 import { Download, Share2 } from "lucide-react";
 import { useRef } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import QRCode from "react-qr-code";
 
 interface QrCodeGeneratorProps {

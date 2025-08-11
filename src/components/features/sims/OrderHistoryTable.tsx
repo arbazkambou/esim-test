@@ -15,7 +15,7 @@ import { sendGTMEvent } from "@next/third-parties/google";
 import { Clock4, CreditCard, NotepadText, RefreshCw, User } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { Spinner } from "../../my-ui/fallbacks/Spinner";
 import { Button } from "../../ui/button";
 

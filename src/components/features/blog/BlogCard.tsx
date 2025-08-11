@@ -27,7 +27,7 @@ function BlogCard({ blog, isRelatedBlog }: PropsType) {
             sizes="auto"
             fill
             quality={70}
-            className="rounded-[0.375rem] object-cover transition-all group-hover:blur-[2px]"
+            className="rounded-[0.375rem] transition-all group-hover:blur-[2px]"
           />
           <Badge className="z-50 flex scale-0 items-center gap-2 p-3 opacity-0 transition-all group-hover:scale-100 group-hover:opacity-100">
             <ArrowUpRight size={30} />

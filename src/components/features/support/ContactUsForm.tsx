@@ -19,7 +19,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { postContactUsData } from "@/services/support/SupportApis";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import SpinnerMini from "@/components/my-ui/fallbacks/SpinnerMini";
 
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string;
@@ -155,9 +155,8 @@ function ContactUsForm() {
         </div>
         {/* reCAPTCHA */}
         <div className="mt-4">
-          <ReCAPTCHA sitekey={RECAPTCHA_SITE_KEY} onChange={onCaptchaChange}/>
+          <ReCAPTCHA sitekey={RECAPTCHA_SITE_KEY} onChange={onCaptchaChange} />
         </div>
-      
 
         <Button
           type="submit"

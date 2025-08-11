@@ -3,6 +3,7 @@ import {
   globalHttpErrorHandler,
   globalResponseHandler,
 } from "@/helpers/globalResponseHandler";
+import { platformVersion } from "@/helpers/platform";
 import { baseUrl } from "@/lib/fetch/apiSetup";
 import {
   LoginUserInputType,
@@ -31,7 +32,7 @@ export async function sendOTP({ email, password }: SendOTPInputType) {
 
       method: "POST",
 
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, ...platformVersion }),
     });
 
     if (!response.ok) {
@@ -62,14 +63,15 @@ export async function registerUser({
       headers: {
         "Content-Type": "application/json",
       },
+      method: "POST",
       body: JSON.stringify({
         name,
         email,
         password,
         otp,
         is_affiliate: is_affiliate ? is_affiliate : false,
+        ...platformVersion,
       }),
-      method: "POST",
     });
 
     if (!response.ok) {
@@ -91,7 +93,7 @@ export async function registerUser({
 export async function loginUser({ email, password }: LoginUserInputType) {
   try {
     const response = await fetch(`${baseUrl}/login`, {
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, ...platformVersion }),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +124,7 @@ export async function sendPasswordResetPin(email: string) {
         "Content-Type": "application/json",
       },
 
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email, ...platformVersion }),
     });
 
     if (!response.ok) {
@@ -150,7 +152,13 @@ export async function sendPasswordResetData({
   try {
     const response = await fetch(`${baseUrl}/password-reset/submit`, {
       method: "POST",
-      body: JSON.stringify({ email, password, password_confirmation, token }),
+      body: JSON.stringify({
+        email,
+        password,
+        password_confirmation,
+        token,
+        ...platformVersion,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -179,7 +187,7 @@ export async function socialLogin(inputs: SocialLoginInputs) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...inputs }),
+      body: JSON.stringify({ ...inputs, ...platformVersion }),
     });
 
     if (!response.ok) {

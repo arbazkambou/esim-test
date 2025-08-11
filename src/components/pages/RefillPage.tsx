@@ -12,7 +12,7 @@ import { HandCoins, Tag } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import SpinnerMini from "../my-ui/fallbacks/SpinnerMini";
 import { Skeleton } from "../ui/skeleton";
 
@@ -128,8 +128,8 @@ function RefillPage() {
                 valueAsNumber: true,
                 min: { value: 1, message: "Amount must be greater than 0" },
                 max: {
-                  value: 100,
-                  message: "Amount must be less than or equal to 100",
+                  value: 1000000,
+                  message: "Enter a valid amount",
                 },
               })}
             />
