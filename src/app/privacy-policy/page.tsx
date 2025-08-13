@@ -276,7 +276,7 @@ function Page() {
         },
         {
           type: "bold",
-          text: "Contacting Customer Support: If you encounter any issues while updating your information or if you prefer assistance, our customer support team is here to help. You can reach out to us via email at [support email address], and we will guide you through the process. Please include your name and the specific changes you wish to make in your request.",
+          text: "Contacting Customer Support: If you encounter any issues while updating your information or if you prefer assistance, our customer support team is here to help. You can reach out to us via email at support@esimcard.com, and we will guide you through the process. Please include your name and the specific changes you wish to make in your request.",
         },
         {
           type: "bold",

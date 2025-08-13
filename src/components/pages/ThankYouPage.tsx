@@ -4,7 +4,7 @@ import { useOrderHistory } from "@/hooks/useOrdersHistory";
 import { useAuth } from "@/providers/AuthProvider";
 import { useAppDispatch } from "@/redux/hooks";
 import { clearCart } from "@/redux/slices/cartSlice";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

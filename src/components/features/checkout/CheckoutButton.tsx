@@ -8,7 +8,7 @@ import {
   PurchasePackages,
   PurchasePackagesInputs,
 } from "@/types/purchase/PurchasePackages";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 import { UseMutateFunction } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { ArrowUpRight } from "lucide-react";

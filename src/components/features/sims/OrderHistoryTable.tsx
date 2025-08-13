@@ -11,7 +11,7 @@ import {
 import { formatDateTime } from "@/helpers/formatDateTime";
 import { useOrderHistory } from "@/hooks/useOrdersHistory";
 import { useAuth } from "@/providers/AuthProvider";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 import { Clock4, CreditCard, NotepadText, RefreshCw, User } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";

@@ -2,8 +2,11 @@ import FloatingBottomNav from "@/components/layout/FloatingBottomNav";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import PromotionalNav from "@/components/layout/PromotionalNav";
+import FloatingWhatsApp from "@/components/my-ui/shared/FloatingWhatsapp";
 import GTMWrapper from "@/components/my-ui/shared/GTMWrapper";
 import { RouteChangeListener } from "@/components/my-ui/shared/RouteChangeListner";
+import TawkScript from "@/components/my-ui/shared/TawkScript";
+import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/providers/AuthProvider";
 import { PromoCodeProvider } from "@/providers/PromoCodeProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
@@ -13,9 +16,6 @@ import { Montserrat, Poppins, Work_Sans } from "next/font/google";
 import Script from "next/script";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
-import FloatingWhatsApp from "@/components/my-ui/shared/FloatingWhatsapp";
-import TawkScript from "@/components/my-ui/shared/TawkScript";
-import { Toaster } from "@/components/ui/sonner";
 
 const sans = Work_Sans({
   subsets: ["latin"],
@@ -51,14 +51,20 @@ export default function RootLayout({
       prefix="og: https://ogp.me/ns#"
     >
       <head>
+        <link
+          rel="preconnect"
+          href="https://www.googletagmanager.com"
+          crossOrigin=""
+        />
+
         {/* Trustpilot Script */}
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
         />
       </head>
       <body className="relative bg-background font-sans text-lg font-400">
-        <GTMWrapper />
+        {/* <GTMWrapper /> */}
         <NextTopLoader
           showSpinner={false}
           color="hsla(var(--primary))"
@@ -85,7 +91,7 @@ export default function RootLayout({
                 <Navbar />
 
                 {children}
-
+                <GTMWrapper />
                 <Footer />
                 <FloatingBottomNav />
               </ReduxProvider>

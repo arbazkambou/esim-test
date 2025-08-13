@@ -1,4 +1,4 @@
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 import { ChevronRight } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";

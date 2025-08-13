@@ -3,7 +3,7 @@
 import { cleanString } from "@/helpers/cleanString";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Input } from "../../ui/input";
 
 interface PropsType {
@@ -14,22 +14,6 @@ interface PropsType {
 function CountrySearchFallback({ searchInputStyle, isDataLoading }: PropsType) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   function handleSearchQuery(e: React.ChangeEvent<HTMLInputElement>) {
     const query = cleanString(e.target.value);
@@ -40,10 +24,7 @@ function CountrySearchFallback({ searchInputStyle, isDataLoading }: PropsType) {
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="relative z-50 w-full scale-100 transition duration-500"
-    >
+    <div className="relative z-50 w-full scale-100 transition duration-500">
       {/* Search Input */}
       <Input
         placeholder="Enter your destination"

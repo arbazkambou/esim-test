@@ -8,7 +8,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 
 function CartQuantityButton({
   setShowCart,

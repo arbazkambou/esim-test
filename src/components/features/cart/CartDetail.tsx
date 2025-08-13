@@ -10,7 +10,7 @@ import ApplyCouponCode from "./ApplyCouponCode";
 import CartItem from "./CartItem";
 import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 
 export interface PropsType {
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;

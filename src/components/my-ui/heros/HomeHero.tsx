@@ -9,11 +9,11 @@ import hero from "@/_assets/images/hero.png";
 import fiveStars from "@/_assets/svgs/5Star.svg";
 import FlagHoverComponent from "@/components/animations/FlagHoverComponent";
 import SocialsButtons from "@/components/features/auth/SocialsButtons";
+import SearchPackagesList from "@/components/features/packages/SearchPackagesList";
 import { Button } from "@/components/ui/button";
 import { ArrowUpLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import SearchPackagesList from "../../features/packages/SearchPackagesList";
 
 function HomeHero() {
   const countryFlags = [

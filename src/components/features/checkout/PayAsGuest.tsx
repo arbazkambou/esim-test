@@ -32,7 +32,7 @@ import { loginUser } from "@/services/auth/authServices";
 import { AdminRole } from "@/types/auth/LoginUserTypes";
 import LoginRedirectionModal from "../auth/LoginRedirectionModal";
 import { getPayAsGuestFormSchema } from "@/lib/zod/PayAsGuestFormSchema";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 import { getTotalCartPrice } from "@/redux/slices/cartSlice";
 
 function PayAsGuest() {

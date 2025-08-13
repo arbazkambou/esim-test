@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addItem, getTotalCartItems } from "@/redux/slices/cartSlice";
 import { PackagesData } from "@/types/packages/data-only/DataOnlyCountryPackages";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from "@/helpers/sendGTMEvent";
 import { ArrowUpLeft, Plane } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";

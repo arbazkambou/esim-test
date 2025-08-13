@@ -1,11 +1,9 @@
+import SearchPackagesList from "@/components/features/packages/SearchPackagesList";
 import { Tabs } from "@/components/ui/tabs";
 import { TabsList } from "@radix-ui/react-tabs";
 import Link from "next/link";
-import { Suspense } from "react";
-import TabTrigger from "./TabTrigger";
-import CountrySearchFallback from "@/components/my-ui/fallbacks/CountrySearchFallback";
 import NavigationButton from "./NavigationButton";
-import SearchPackagesList from "@/components/features/packages/SearchPackagesList";
+import TabTrigger from "./TabTrigger";
 
 interface PropsType {
   tabsLinks: { href: string; label: string }[];
@@ -43,9 +41,7 @@ function CountryRegionNavigation({ tabsLinks }: PropsType) {
       {/* search input  */}
       <div className="flex justify-center xl:order-1 xl:w-full xl:justify-start">
         <div className={`w-[98%] xs:w-[90%] md:w-[80%] xl:w-full`}>
-          <Suspense fallback={<CountrySearchFallback isDataLoading={true} />}>
-            <SearchPackagesList />
-          </Suspense>
+          <SearchPackagesList />
         </div>
       </div>
 

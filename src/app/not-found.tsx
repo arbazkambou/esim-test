@@ -1,10 +1,8 @@
 import notFoundImg from "@/_assets/svgs/404.svg";
-import CountrySearchFallback from "@/components/my-ui/fallbacks/CountrySearchFallback";
-import FooterLink from "@/components/my-ui/links/FooterLink";
 import SearchPackagesList from "@/components/features/packages/SearchPackagesList";
+import FooterLink from "@/components/my-ui/links/FooterLink";
 import { Metadata } from "next";
 import Image from "next/image";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -45,9 +43,7 @@ export default function NotFound() {
             Oops! Page Not Found
           </h1>
           <div className="max-w-[550px]">
-            <Suspense fallback={<CountrySearchFallback isDataLoading={true} />}>
-              <SearchPackagesList />
-            </Suspense>
+            <SearchPackagesList />
           </div>
           <p className="text-[0.875rem] text-primary md:text-base">
             Looks like the page you're looking for doesn't exist anymore — or

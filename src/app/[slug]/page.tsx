@@ -25,8 +25,6 @@ import {
 import { PackagesData } from "@/types/packages/data-only/DataOnlyCountryPackages";
 import { notFound } from "next/navigation";
 
-export const revalidate = Number(process.env.REVALIDATE_TIME);
-
 export async function generateStaticParams() {
   const response1 = getCountriesThatHaveDataVoicePackages();
   const response2 = getContinentsThatHaveDataVoicePackages();
